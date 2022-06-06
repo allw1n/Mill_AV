@@ -1,8 +1,10 @@
-package com.m_corp.millav;
+package com.m_corp.millav.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.m_corp.millav.R;
 
 public class EnterCropsActivity extends AppCompatActivity {
 

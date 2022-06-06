@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable/round_background.xml" value="0.1625" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable/round_dark_background.xml" value="0.1625" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable/round_light_background.xml" value="0.1625" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_forgot_password.xml" value="0.17395833333333333" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_register.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/fragment_forgot_bottom_sheet.xml" value="0.25" />
       </map>
     </option>
   </component>

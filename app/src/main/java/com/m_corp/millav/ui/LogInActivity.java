@@ -1,4 +1,4 @@
-package com.m_corp.millav;
+package com.m_corp.millav.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.m_corp.millav.R;
 import com.m_corp.millav.databinding.ActivityLogInBinding;
 
 import java.util.Objects;
@@ -22,15 +23,16 @@ import java.util.Objects;
 public class LogInActivity extends AppCompatActivity {
 
     private ActivityLogInBinding binding;
-    private static final String LOGIN_ID = "login_id";
+    private static final String MOBILE = "mobile";
     private static final String PASSWORD = "password";
     private static final String NONE = "none";
     private static final String SHARED_PREFS = "shared_prefs";
+    public static final String BOTTOM_SHEET_TAG = "ForgotBottomSheetFragment";
 
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor editor;
 
-    private String savedLoginID;
+    private String savedMobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +44,14 @@ public class LogInActivity extends AppCompatActivity {
         sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPrefs.edit();
 
-        TextInputLayout layoutInputLoginID, layoutInputPassword;
-        TextInputEditText inputLoginID, inputPassword;
+        TextInputLayout layoutInputMobile, layoutInputPassword;
+        TextInputEditText inputMobile, inputPassword;
         MaterialCheckBox checkRememberMe;
         MaterialButton buttonLogin, buttonRegister, buttonForgot;
 
-        layoutInputLoginID = binding.layoutInputLoginID;
+        layoutInputMobile = binding.layoutInputMobile;
         layoutInputPassword = binding.layoutInputPassword;
-        inputLoginID = binding.inputLoginID;
+        inputMobile = binding.inputMobile;
         inputPassword = binding.inputPassword;
 
         checkRememberMe = binding.checkRememberMe;
@@ -58,19 +60,19 @@ public class LogInActivity extends AppCompatActivity {
         buttonRegister = binding.buttonRegister;
         buttonForgot = binding.buttonForgot;
 
-        savedLoginID = sharedPrefs.getString(LOGIN_ID, NONE);
-        if (!savedLoginID.equals(NONE)) {
-            inputLoginID.setText(savedLoginID);
+        savedMobile = sharedPrefs.getString(MOBILE, NONE);
+        if (!savedMobile.equals(NONE)) {
+            inputMobile.setText(savedMobile);
             inputPassword.setText(sharedPrefs.getString(PASSWORD, ""));
         }
 
-        inputLoginID.addTextChangedListener(new TextWatcher() {
+        inputMobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (layoutInputLoginID.isErrorEnabled()) layoutInputLoginID.setError("");
+                if (layoutInputMobile.isErrorEnabled()) layoutInputMobile.setError("");
             }
 
             @Override
@@ -94,11 +96,11 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String loginID, password;
-                loginID = Objects.requireNonNull(inputLoginID.getText()).toString().toLowerCase();
+                loginID = Objects.requireNonNull(inputMobile.getText()).toString().toLowerCase();
                 password = Objects.requireNonNull(inputPassword.getText()).toString();
 
                 if (TextUtils.isEmpty(loginID)) {
-                    layoutInputLoginID.setError(getString(R.string.required));
+                    layoutInputMobile.setError(getString(R.string.required));
                     return;
                 }
 
@@ -111,18 +113,36 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            editor.putString(LOGIN_ID, loginID);
+                            editor.putString(MOBILE, loginID);
                             editor.putString(PASSWORD, password);
-                            editor.apply();
                         } else {
-                            editor.putString(LOGIN_ID, NONE);
+                            editor.putString(MOBILE, NONE);
                             editor.putString(PASSWORD, NONE);
-                            editor.apply();
                         }
+                        editor.apply();
                     }
                 });
 
                 Intent enterCropsIntent = new Intent(LogInActivity.this, EnterCropsActivity.class);
+                startActivity(enterCropsIntent);
+                finish();
+            }
+        });
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(LogInActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+
+        buttonForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForgotBottomSheetFragment fragment = ForgotBottomSheetFragment.newInstance();
+                fragment.application = getApplication();
+                fragment.show(getSupportFragmentManager(), BOTTOM_SHEET_TAG);
             }
         });
     }
