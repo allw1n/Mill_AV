@@ -3,6 +3,7 @@ package com.m_corp.millav.ui;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,8 @@ public class EnterCropsActivity extends AppCompatActivity {
 
         savedMobile = getIntent().getStringExtra(MOBILE);
         savedPassword = getIntent().getStringExtra(PASSWORD);
+
+        RecyclerView recyclerCrops = binding.recyclerCrops;
     }
 
     @Override

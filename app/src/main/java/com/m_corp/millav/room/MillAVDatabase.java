@@ -13,6 +13,8 @@ public abstract class MillAVDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
 
+    public abstract CropDao cropDao();
+
     private static volatile MillAVDatabase INSTANCE;
 
     public static MillAVDatabase getDatabase(final Context context) {

@@ -147,9 +147,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
                     userViewModel.changePassword(inputMobile, confirmPassword);
                     Toast.makeText(application, "Password changed successfully!",
                             Toast.LENGTH_SHORT).show();
-                    TextInputEditText changedPassword = requireActivity()
-                            .findViewById(R.id.inputPassword);
-                    changedPassword.setText(confirmPassword);
+
                     requireActivity()
                             .getSupportFragmentManager()
                             .beginTransaction()

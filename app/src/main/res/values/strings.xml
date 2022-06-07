@@ -14,4 +14,9 @@
     <string name="enter_details_to_reset_password">Enter details to reset password.</string>
     <string name="full_name">Full Name*</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="add_crop">Add Crop</string>
+    <string name="make_bill">Make Bill</string>
+    <string name="minus_button">Minus Button</string>
+    <string name="plus_button">Plus Button</string>
+    <string name="zero">0</string>
 </resources>
