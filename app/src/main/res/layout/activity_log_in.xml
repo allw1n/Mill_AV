@@ -4,17 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LogInActivity"
-    android:padding="12dp">
+    tools:context=".ui.LogInActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageApp"
-        android:layout_width="match_parent"
-        android:layout_height="386dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/ic_launcher_background"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutInputMobile"
@@ -22,6 +30,8 @@
         android:layout_height="wrap_content"
         app:endIconMode="clear_text"
         android:hint="@string/mobile_no"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageApp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +53,8 @@
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
         android:hint="@string/password"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutInputMobile"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/remember_me"
-        android:padding="6dp"
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutInputPassword"
         app:layout_constraintBottom_toTopOf="@id/buttonLogin" />
@@ -73,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="@string/forgot_password"
         android:textAllCaps="false"
-        android:padding="6dp"
+        android:layout_marginEnd="12dp"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintTop_toBottomOf="@id/layoutInputPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,6 +97,8 @@
         android:layout_height="wrap_content"
         android:text="@string/log_in"
         android:padding="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkRememberMe"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +110,8 @@
         android:layout_height="wrap_content"
         android:text="@string/register"
         android:padding="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin"

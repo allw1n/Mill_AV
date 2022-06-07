@@ -16,4 +16,7 @@ public interface UserDao {
 
     @Query("UPDATE user_details SET password = :password WHERE mobile = :mobile")
     void changePassword(String mobile, String password);
+
+    @Query("UPDATE user_details SET logged_in = :loggedIn WHERE mobile = :mobile AND password = :password")
+    void loginUser(String mobile, String password, boolean loggedIn);
 }

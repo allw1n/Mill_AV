@@ -50,14 +50,12 @@ public class UserRepository {
     }
 
     public void insertUser(User user) {
-        userDao.insertUser(user);
-
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(application, "Registered successfully;", Toast.LENGTH_SHORT).show();
+                userDao.insertUser(user);
             }
-        });
+        }).start();
     }
 
     public void changePassword(String mobile, String password) {
@@ -65,6 +63,15 @@ public class UserRepository {
             @Override
             public void run() {
                 userDao.changePassword(mobile, password);
+            }
+        }).start();
+    }
+
+    public void loginUser(String mobile, String password, boolean loggedIn) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userDao.loginUser(mobile, password, loggedIn);
             }
         }).start();
     }

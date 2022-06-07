@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextUtils;
@@ -25,19 +26,21 @@ import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ForgotBottomSheetFragment#newInstance} factory method to
+ * Use the {@link ForgotPasswordFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
+public class ForgotPasswordFragment extends BottomSheetDialogFragment {
 
     public Application application;
 
-    public ForgotBottomSheetFragment() {
+    private UserViewModel userViewModel;
+
+    public ForgotPasswordFragment() {
         // Required empty public constructor
     }
 
-    public static ForgotBottomSheetFragment newInstance() {
-        return new ForgotBottomSheetFragment();
+    public static ForgotPasswordFragment newInstance() {
+        return new ForgotPasswordFragment();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_forgot_bottom_sheet, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_forgot_password, container, false);
 
         TextInputLayout layoutInputForgotMobile, layoutInputNewPassword, layoutInputConfirmPassword;
         TextInputEditText inputForgotMobile, inputNewPassword, inputConfirmPassword;
@@ -61,6 +64,8 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
         inputForgotMobile = rootView.findViewById(R.id.inputForgotMobile);
         inputNewPassword = rootView.findViewById(R.id.inputNewPassword);
         inputConfirmPassword = rootView.findViewById(R.id.inputConfirmPassword);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         inputForgotMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -84,6 +89,8 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (layoutInputNewPassword.isErrorEnabled())
                     layoutInputNewPassword.setErrorEnabled(false);
+                if (layoutInputConfirmPassword.isErrorEnabled())
+                    layoutInputConfirmPassword.setErrorEnabled(false);
             }
 
             @Override
@@ -96,6 +103,8 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (layoutInputNewPassword.isErrorEnabled())
+                    layoutInputNewPassword.setErrorEnabled(false);
                 if (layoutInputConfirmPassword.isErrorEnabled())
                     layoutInputConfirmPassword.setErrorEnabled(false);
             }
@@ -120,7 +129,6 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
                     return;
                 }
 
-                UserViewModel userViewModel = new UserViewModel(application);
                 User[] user = userViewModel.getUser(inputMobile);
                 if (user.length == 0) {
                     layoutInputForgotMobile.setError("Enter registered mobile number!");
@@ -139,8 +147,19 @@ public class ForgotBottomSheetFragment extends BottomSheetDialogFragment {
                     userViewModel.changePassword(inputMobile, confirmPassword);
                     Toast.makeText(application, "Password changed successfully!",
                             Toast.LENGTH_SHORT).show();
+                    TextInputEditText changedPassword = requireActivity()
+                            .findViewById(R.id.inputPassword);
+                    changedPassword.setText(confirmPassword);
+                    requireActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .remove(ForgotPasswordFragment.this)
+                            .commit();
                 }
-                else layoutInputConfirmPassword.setError("Passwords do not match!");
+                else {
+                    layoutInputNewPassword.setError("Passwords do not match!");
+                    layoutInputConfirmPassword.setError("Passwords do not match!");
+                }
             }
         });
 

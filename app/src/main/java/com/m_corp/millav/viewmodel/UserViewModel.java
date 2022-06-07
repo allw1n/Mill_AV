@@ -28,4 +28,8 @@ public class UserViewModel extends AndroidViewModel {
     public void changePassword(String mobile, String password) {
         userRepository.changePassword(mobile, password);
     }
+
+    public void loginUser(String mobile, String password, boolean loggedIn) {
+        userRepository.loginUser(mobile, password, loggedIn);
+    }
 }

@@ -19,10 +19,15 @@ public class User {
     @NonNull
     private final String password;
 
-    public User(@NonNull String mobile, @NonNull String name, @NonNull String password) {
+    @ColumnInfo(name = "logged_in")
+    private final boolean loggedIn;
+
+    public User(@NonNull String mobile, @NonNull String name,
+                @NonNull String password, boolean loggedIn) {
         this.mobile = mobile;
         this.name = name;
         this.password = password;
+        this.loggedIn = loggedIn;
     }
 
     @NonNull
@@ -38,5 +43,9 @@ public class User {
     @NonNull
     public String getPassword() {
         return password;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 }
