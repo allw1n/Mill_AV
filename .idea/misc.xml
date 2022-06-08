@@ -16,7 +16,8 @@
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_register.xml" value="0.22" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/activity_splash.xml" value="0.1" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/crop_item.xml" value="0.2" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/crop_item.xml" value="0.25" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/crops_list_item.xml" value="0.15433946130825138" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/fragment_forgot_bottom_sheet.xml" value="0.25" />
       </map>
     </option>
