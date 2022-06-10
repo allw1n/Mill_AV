@@ -23,6 +23,10 @@ public class CropRepository {
         crops = cropDao.getCrops();
     }
 
+    public LiveData<List<Crop>> getCrops() {
+        return crops;
+    }
+
     public void insertCrop(Crop crop) {
         new Thread(new Runnable() {
             @Override
@@ -30,9 +34,5 @@ public class CropRepository {
                 cropDao.insertCrop(crop);
             }
         }).start();
-    }
-
-    public LiveData<List<Crop>> getCrops() {
-        return crops;
     }
 }

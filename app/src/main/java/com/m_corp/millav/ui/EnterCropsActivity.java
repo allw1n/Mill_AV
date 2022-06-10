@@ -56,6 +56,12 @@ public class EnterCropsActivity extends AppCompatActivity {
         CropsAdapter cropsAdapter = new CropsAdapter(this, cropsTotal);
         recyclerCrops.setAdapter(cropsAdapter);
 
+        cropsAdapter.setOnRecyclerViewItemClickListener(new CropsAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+            }
+        });
+
         cropViewModel.getCrops().observe(this, new Observer<List<Crop>>() {
             @Override
             public void onChanged(List<Crop> cropsList) {

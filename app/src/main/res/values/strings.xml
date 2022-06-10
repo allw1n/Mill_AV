@@ -22,6 +22,8 @@
     <string name="select_crop">Select Crop*</string>
 
     <string-array name="crops_list">
-        <item></item>
+        <item>Rice</item>
+        <item>Wheat</item>
+        <item>Arhar Dal</item>
     </string-array>
 </resources>

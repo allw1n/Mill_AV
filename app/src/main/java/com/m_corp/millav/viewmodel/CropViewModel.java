@@ -1,6 +1,7 @@
 package com.m_corp.millav.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -20,6 +21,9 @@ public class CropViewModel extends AndroidViewModel {
         super(application);
         cropRepository = new CropRepository(application);
         crops = cropRepository.getCrops();
+        for (int i = 0; i < 3; i++) {
+            Log.d("CropViewModel crop", String.valueOf(crops.getValue()));
+        }
     }
 
     public void insertCrop(Crop crop) {

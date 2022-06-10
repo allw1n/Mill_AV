@@ -12,10 +12,10 @@ import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<CharSequence> {
 
-    private List<Crop> cropsList;
+    private final List<CharSequence> cropsList;
 
-    public CustomArrayAdapter(Context context, int textViewResourceId, List<Crop> cropsList) {
-        super(context, textViewResourceId);
+    public CustomArrayAdapter(Context context, int textViewResourceId, List<CharSequence> cropsList) {
+        super(context, textViewResourceId, cropsList);
         this.cropsList = cropsList;
     }
 
@@ -27,6 +27,6 @@ public class CustomArrayAdapter extends ArrayAdapter<CharSequence> {
     @Nullable
     @Override
     public CharSequence getItem(int position) {
-        return this.cropsList.get(position).getCropName();
+        return this.cropsList.get(position);
     }
 }
