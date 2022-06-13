@@ -7,14 +7,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutSelectCrop"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:hint="@string/select_crop"
-            android:layout_marginStart="6dp"
             android:layout_marginEnd="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:inputType="none"/>
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -35,11 +38,10 @@
             android:id="@+id/minusBag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_disabled_bg"
-            android:clickable="false"
+            android:background="@drawable/button_enabled_bg"
             android:contentDescription="@string/minus_button"
             android:hapticFeedbackEnabled="true"
-            android:src="@drawable/ic_minus_disabled"
+            android:src="@drawable/ic_minus_enabled"
             app:layout_constraintStart_toEndOf="@id/layoutSelectCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/viewTotalBags"
@@ -50,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/zero"
-            android:textSize="40sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
@@ -76,11 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/zero"
-            android:textSize="40sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_marginStart="36dp"
-            android:layout_marginEnd="6dp"
             app:layout_constraintStart_toEndOf="@id/plusBag"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

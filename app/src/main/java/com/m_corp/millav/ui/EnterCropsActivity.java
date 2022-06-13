@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
 import com.m_corp.millav.databinding.ActivityEnterCropsBinding;
 import com.m_corp.millav.room.Crop;
 import com.m_corp.millav.viewmodel.CropViewModel;
@@ -50,7 +51,6 @@ public class EnterCropsActivity extends AppCompatActivity {
 
         List<CropDetailsPojo> cropsTotalWeighed = new ArrayList<>();
         cropsTotalWeighed.add(new CropDetailsPojo());
-        Log.d("CROP", cropsTotalWeighed.get(0).getCropName());
 
         RecyclerView recyclerCrops = binding.recyclerCrops;
         recyclerCrops.setLayoutManager(new LinearLayoutManager(this));
@@ -68,26 +68,28 @@ public class EnterCropsActivity extends AppCompatActivity {
         cropsAdapter.setOnRecyclerViewItemClickListener(new CropsAdapter.onRecyclerViewItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position, CropDetailsPojo cropDetails) {
-                if (view.getId() == R.id.selectCrop) {
+                Log.d("Position", String.valueOf(position));
+                if (view.getId() == R.id.minusBag || view.getId() == R.id.plusBag) {
+                    Log.d("Crop bags changed", String.valueOf(cropDetails.getBags()));
+                    cropsTotalWeighed.get(position).setBags(cropDetails.getBags());
+                    Log.d("Crop bags set to", String.valueOf(cropsTotalWeighed.get(position).getBags()));
+                    cropsAdapter.notifyItemChanged(position);
+                }
+                if (view.getId() == R.id.selectCropItem) {
+                    Log.d("Crop name changed", cropDetails.getCropName());
                     cropsTotalWeighed.get(position).setCropName(cropDetails.getCropName());
                 }
-                if (view.getId() == R.id.viewTotalBags) {
-                    cropsTotalWeighed.get(position).setBags(cropDetails.getBags());
-                }
-                if (view.getId() == R.id.viewTotalWeight) {
-                    cropsTotalWeighed.get(position).setWeight(cropDetails.getWeight());
-                }
-                cropsAdapter.notifyItemChanged(position);
             }
         });
 
         fabAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CropDetailsPojo newCrop = new CropDetailsPojo();
-                cropsAdapter.addNewCropTotal(newCrop);
+                cropsTotalWeighed.add(new CropDetailsPojo());
+                cropsAdapter.setWeighedToNone();
                 Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed.size()));
                 cropsAdapter.notifyItemInserted(cropsTotalWeighed.size() - 1);
+                recyclerCrops.smoothScrollToPosition(cropsTotalWeighed.size() - 1);
             }
         });
 

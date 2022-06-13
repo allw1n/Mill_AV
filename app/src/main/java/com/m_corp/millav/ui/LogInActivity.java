@@ -128,8 +128,6 @@ public class LogInActivity extends AppCompatActivity {
                         editor.putString(MOBILE, NONE);
                         editor.putString(PASSWORD, NONE);
                     }
-                    Log.d(MOBILE, sharedPrefs.getString(MOBILE, NONE));
-                    Log.d(PASSWORD, sharedPrefs.getString(PASSWORD, NONE));
                     editor.apply();
 
                     userViewModel.loginUser(mobile, password, true);
