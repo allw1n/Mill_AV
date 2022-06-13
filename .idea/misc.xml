@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/activity_enter_crops.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/crop_item.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/button_disabled_bg.xml" value="0.1625" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/ic_minus_disabled.xml" value="0.1625" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/ic_minus_enabled.xml" value="0.1625" />
