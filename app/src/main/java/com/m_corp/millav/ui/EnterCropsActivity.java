@@ -29,6 +29,7 @@ public class EnterCropsActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
     private CropViewModel cropViewModel;
+    private List<Crop> cropsListFromSource = new ArrayList<>();
 
     private static final String MOBILE = "mobile";
     private static final String PASSWORD = "password";
@@ -54,14 +55,15 @@ public class EnterCropsActivity extends AppCompatActivity {
 
         RecyclerView recyclerCrops = binding.recyclerCrops;
         recyclerCrops.setLayoutManager(new LinearLayoutManager(this));
-        CropsAdapter cropsAdapter = new CropsAdapter(this, cropsTotalWeighed);
+        CropsAdapter cropsAdapter = new CropsAdapter(this);
         recyclerCrops.setAdapter(cropsAdapter);
 
         cropViewModel = new ViewModelProvider(this).get(CropViewModel.class);
         cropViewModel.getCrops().observe(this, new Observer<List<Crop>>() {
             @Override
             public void onChanged(@NonNull final List<Crop> cropsList) {
-                cropsAdapter.setCropsList(cropsList);
+                cropsListFromSource = cropsList;
+                cropsAdapter.setCropsList(cropsListFromSource);
             }
         });
 
@@ -73,12 +75,12 @@ public class EnterCropsActivity extends AppCompatActivity {
                     Log.d("Crop bags changed", String.valueOf(cropDetails.getBags()));
                     cropsTotalWeighed.get(position).setBags(cropDetails.getBags());
                     Log.d("Crop bags set to", String.valueOf(cropsTotalWeighed.get(position).getBags()));
-                    cropsAdapter.notifyItemChanged(position);
                 }
                 if (view.getId() == R.id.selectCropItem) {
                     Log.d("Crop name changed", cropDetails.getCropName());
                     cropsTotalWeighed.get(position).setCropName(cropDetails.getCropName());
                 }
+                cropsAdapter.notifyItemChanged(position);
             }
         });
 
@@ -86,8 +88,8 @@ public class EnterCropsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cropsTotalWeighed.add(new CropDetailsPojo());
-                cropsAdapter.setWeighedToNone();
                 Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed.size()));
+                cropsAdapter.addNewToCropsTotalWeighed();
                 cropsAdapter.notifyItemInserted(cropsTotalWeighed.size() - 1);
                 recyclerCrops.smoothScrollToPosition(cropsTotalWeighed.size() - 1);
             }

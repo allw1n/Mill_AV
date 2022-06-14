@@ -25,9 +25,8 @@ import java.util.List;
 public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHolder> {
 
     private final Context context;
-    private List<Crop> cropsListFromSource = new ArrayList<>();
-    private List<CharSequence> cropsListForCAA = new ArrayList<>();
-    private List<CropDetailsPojo> cropsTotalWeighed;
+    private final List<CharSequence> cropsListForCAA = new ArrayList<>();
+    private final List<CropDetailsPojo> cropsTotalWeighed = new ArrayList<>();
     private static final String NONE = "none";
     private String weighedCrop = NONE;
     private onRecyclerViewItemClickListener onRecyclerViewItemClickListener;
@@ -41,16 +40,14 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         void onItemClickListener(View view, int position, CropDetailsPojo cropDetails);
     }
 
-    public CropsAdapter(Context context, List<CropDetailsPojo> cropsTotalWeighed) {
+    public CropsAdapter(Context context) {
         this.context = context;
-        this.cropsTotalWeighed = cropsTotalWeighed;
     }
 
     @NonNull
     @Override
     public CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CropViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.crop_item, parent, false));
+        return new CropViewHolder(LayoutInflater.from(context).inflate(R.layout.crop_item, parent, false));
     }
 
     @Override
@@ -66,15 +63,16 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
     @SuppressLint("NotifyDataSetChanged")
     public void setCropsList (List<Crop> cropsListFromSource) {
-        this.cropsListFromSource = cropsListFromSource;
         for (Crop crop: cropsListFromSource) {
             cropsListForCAA.add(crop.getCropName());
         }
         notifyDataSetChanged();
     }
 
-    public void setWeighedToNone() {
+    public void addNewToCropsTotalWeighed() {
         weighedCrop = NONE;
+        Log.d("weighedCrop", weighedCrop);
+        cropsTotalWeighed.add(new CropDetailsPojo());
     }
 
     class CropViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, AdapterView.OnItemClickListener{
@@ -107,15 +105,24 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
             if (!weighedCrop.equals(NONE)) {
                 selectCrop.setText(weighedCrop, false);
+                Log.d("selectCrop set to", weighedCrop);
             }
 
             int bags = cropDetails.getBags();
             float totalWeight = bags * 1;
             viewTotalBags.setText(String.valueOf(bags));
-            if (bags == 0) {
+            if (bags > 1) {
+                Log.d("minusBag", "already enabled");
+            } else if (bags == 1){
+                minusBag.setClickable(true);
+                minusBag.setImageResource(R.drawable.ic_minus_enabled);
+                minusBag.setBackgroundResource(R.drawable.button_enabled_bg);
+                Log.d("minusBag", "enabled");
+            } else {
                 minusBag.setClickable(false);
                 minusBag.setImageResource(R.drawable.ic_minus_disabled);
                 minusBag.setBackgroundResource(R.drawable.button_disabled_bg);
+                Log.d("minusBag", "disabled");
             }
             viewTotalWeight.setText(String.valueOf(totalWeight));
         }
@@ -126,6 +133,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
             Log.d("Adapter position", String.valueOf(adapterPosition));
             int numberOfBags = cropsTotalWeighed.get(adapterPosition).getBags();
             weighedCrop = cropsTotalWeighed.get(adapterPosition).getCropName();
+            Log.d("weighedCrop", weighedCrop);
 
             if (view.getId() == R.id.minusBag) {
                 if (numberOfBags >= 1) {
@@ -141,6 +149,8 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
             onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,
                     cropsTotalWeighed.get(adapterPosition));
+
+            notifyItemChanged(adapterPosition);
         }
 
         @Override
@@ -149,9 +159,12 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
             cropsTotalWeighed.get(adapterPosition)
                     .setCropName(selectCrop.getText().toString());
             weighedCrop = cropsTotalWeighed.get(adapterPosition).getCropName();
+            Log.d("weighedCrop", weighedCrop);
 
             onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,
                     cropsTotalWeighed.get(adapterPosition));
+
+            notifyItemChanged(adapterPosition);
         }
     }
 }

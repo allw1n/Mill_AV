@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MakeBillActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewShopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop Name"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerShopName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewShopName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/viewName" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerShopName"
+        app:layout_constraintBottom_toTopOf="@+id/viewMobile"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewMobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewName"
+        app:layout_constraintBottom_toTopOf="@+id/viewAddress"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewMobile"
+        app:layout_constraintBottom_toTopOf="@+id/dividerCustomerInfo"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerCustomerInfoVertical"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerShopName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dividerCustomerInfo"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCustomerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fallen"
+        app:layout_constraintStart_toEndOf="@+id/viewName"
+        app:layout_constraintTop_toTopOf="@id/viewName"
+        app:layout_constraintBottom_toBottomOf="@id/viewName"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCustomerMobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1234567890"
+        app:layout_constraintStart_toEndOf="@+id/viewMobile"
+        app:layout_constraintTop_toTopOf="@id/viewMobile"
+        app:layout_constraintBottom_toBottomOf="@id/viewMobile"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCustomerAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Noida UP"
+        android:maxLines="2"
+        android:maxEms="2"
+        app:layout_constraintStart_toEndOf="@+id/viewAddress"
+        app:layout_constraintTop_toTopOf="@id/viewAddress"
+        app:layout_constraintBottom_toBottomOf="@id/viewAddress"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerCustomerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MillAV"
         tools:targetApi="32">
         <activity
+            android:name=".MakeBillActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.LogInActivity"
             android:exported="true"
             android:screenOrientation="portrait"
