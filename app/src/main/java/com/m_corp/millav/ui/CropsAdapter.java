@@ -28,7 +28,6 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     private final List<CharSequence> cropsListForCAA = new ArrayList<>();
     private final List<CropDetailsPojo> cropsTotalWeighed = new ArrayList<>();
     private static final String NONE = "none";
-    private String weighedCrop = NONE;
     private onRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
     public void setOnRecyclerViewItemClickListener(onRecyclerViewItemClickListener
@@ -70,8 +69,6 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     }
 
     public void addNewToCropsTotalWeighed() {
-        weighedCrop = NONE;
-        Log.d("weighedCrop", weighedCrop);
         cropsTotalWeighed.add(new CropDetailsPojo());
     }
 
@@ -100,12 +97,15 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         void bindTo(CropDetailsPojo cropDetails) {
 
             //populate selectCrops AutoComplete
-            CustomArrayAdapter adapter = new CustomArrayAdapter(context, R.layout.crops_list_item, cropsListForCAA);
+            //List<CharSequence> tempCropsList = new ArrayList<>(cropsListForCAA);
+            CustomArrayAdapter adapter = new CustomArrayAdapter(context, R.layout.crops_list_item,
+                    new ArrayList<>(cropsListForCAA));
             selectCrop.setAdapter(adapter);
 
-            if (!weighedCrop.equals(NONE)) {
-                selectCrop.setText(weighedCrop, false);
-                Log.d("selectCrop set to", weighedCrop);
+            String cropName = cropDetails.getCropName();
+            if (!cropName.equals(NONE)) {
+                selectCrop.setText(cropName, false);
+                Log.d("selectCrop set to", cropName);
             }
 
             int bags = cropDetails.getBags();
@@ -132,15 +132,13 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
             int adapterPosition = getAdapterPosition();
             Log.d("Adapter position", String.valueOf(adapterPosition));
             int numberOfBags = cropsTotalWeighed.get(adapterPosition).getBags();
-            weighedCrop = cropsTotalWeighed.get(adapterPosition).getCropName();
-            Log.d("weighedCrop", weighedCrop);
 
             if (view.getId() == R.id.minusBag) {
                 if (numberOfBags >= 1) {
                     cropsTotalWeighed.get(adapterPosition).setBags(numberOfBags - 1);
                 }
             } else {
-                if (weighedCrop.equals(NONE)) {
+                if (cropsTotalWeighed.get(adapterPosition).getCropName().equals(NONE)) {
                     layoutSelectCrop.setError("Required");
                     return;
                 }
@@ -158,8 +156,8 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
             int adapterPosition = getAdapterPosition();
             cropsTotalWeighed.get(adapterPosition)
                     .setCropName(selectCrop.getText().toString());
-            weighedCrop = cropsTotalWeighed.get(adapterPosition).getCropName();
-            Log.d("weighedCrop", weighedCrop);
+
+            Log.d("weighedCrop", cropsTotalWeighed.get(adapterPosition).getCropName());
 
             onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,
                     cropsTotalWeighed.get(adapterPosition));

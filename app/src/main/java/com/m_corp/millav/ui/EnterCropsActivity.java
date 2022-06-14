@@ -30,6 +30,7 @@ public class EnterCropsActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private CropViewModel cropViewModel;
     private List<Crop> cropsListFromSource = new ArrayList<>();
+    private int cropsTotalWeighed = 0;
 
     private static final String MOBILE = "mobile";
     private static final String PASSWORD = "password";
@@ -50,9 +51,6 @@ public class EnterCropsActivity extends AppCompatActivity {
         savedMobile = getIntent().getStringExtra(MOBILE);
         savedPassword = getIntent().getStringExtra(PASSWORD);
 
-        List<CropDetailsPojo> cropsTotalWeighed = new ArrayList<>();
-        cropsTotalWeighed.add(new CropDetailsPojo());
-
         RecyclerView recyclerCrops = binding.recyclerCrops;
         recyclerCrops.setLayoutManager(new LinearLayoutManager(this));
         CropsAdapter cropsAdapter = new CropsAdapter(this);
@@ -72,26 +70,22 @@ public class EnterCropsActivity extends AppCompatActivity {
             public void onItemClickListener(View view, int position, CropDetailsPojo cropDetails) {
                 Log.d("Position", String.valueOf(position));
                 if (view.getId() == R.id.minusBag || view.getId() == R.id.plusBag) {
-                    Log.d("Crop bags changed", String.valueOf(cropDetails.getBags()));
-                    cropsTotalWeighed.get(position).setBags(cropDetails.getBags());
-                    Log.d("Crop bags set to", String.valueOf(cropsTotalWeighed.get(position).getBags()));
+                    Log.d("Crop bags set to", String.valueOf(cropDetails.getBags()));
                 }
                 if (view.getId() == R.id.selectCropItem) {
                     Log.d("Crop name changed", cropDetails.getCropName());
-                    cropsTotalWeighed.get(position).setCropName(cropDetails.getCropName());
                 }
-                cropsAdapter.notifyItemChanged(position);
             }
         });
 
         fabAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cropsTotalWeighed.add(new CropDetailsPojo());
-                Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed.size()));
+                cropsTotalWeighed++;
+                Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed - 1));
                 cropsAdapter.addNewToCropsTotalWeighed();
-                cropsAdapter.notifyItemInserted(cropsTotalWeighed.size() - 1);
-                recyclerCrops.smoothScrollToPosition(cropsTotalWeighed.size() - 1);
+                cropsAdapter.notifyItemInserted(cropsTotalWeighed - 1);
+                recyclerCrops.smoothScrollToPosition(cropsTotalWeighed - 1);
             }
         });
 

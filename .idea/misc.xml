@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/activity_enter_crops.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/crop_item.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/activity_make_bill.xml" value="0.264" />
+        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/crop_item.xml" value="0.4" />
+        <entry key="..\:/Users/allwi/StudioProjects/Mill_AV/app/src/main/res/layout/crops_list_item.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/button_disabled_bg.xml" value="0.1625" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/ic_minus_disabled.xml" value="0.1625" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/drawable-v24/ic_minus_enabled.xml" value="0.1625" />
@@ -21,10 +23,6 @@
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/crop_item.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/crops_list_item.xml" value="0.15433946130825138" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/MillAV/app/src/main/res/layout/fragment_forgot_bottom_sheet.xml" value="0.25" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/activity_enter_crops.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/activity_make_bill.xml" value="0.33" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/crop_item.xml" value="0.25" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/crops_list_item.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>
