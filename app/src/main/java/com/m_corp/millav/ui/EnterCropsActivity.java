@@ -30,7 +30,7 @@ public class EnterCropsActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private CropViewModel cropViewModel;
     private List<Crop> cropsListFromSource = new ArrayList<>();
-    private int cropsTotalWeighed = 0;
+    private int cropsTotalWeighed = -1;
 
     private static final String MOBILE = "mobile";
     private static final String PASSWORD = "password";
@@ -67,14 +67,19 @@ public class EnterCropsActivity extends AppCompatActivity {
 
         cropsAdapter.setOnRecyclerViewItemClickListener(new CropsAdapter.onRecyclerViewItemClickListener() {
             @Override
-            public void onItemClickListener(View view, int position, CropDetailsPojo cropDetails) {
+            public void onItemClickListener(View view, int position, CropsAddedPojo cropAdded) {
                 Log.d("Position", String.valueOf(position));
                 if (view.getId() == R.id.minusBag || view.getId() == R.id.plusBag) {
-                    Log.d("Crop bags set to", String.valueOf(cropDetails.getBags()));
+                    Log.d("Crop bags set to", String.valueOf(cropAdded.getBags()));
                 }
                 if (view.getId() == R.id.selectCropItem) {
-                    Log.d("Crop name changed", cropDetails.getCropName());
+                    Log.d("Crop name changed", cropAdded.getCropName());
                 }
+                cropsAdapter.notifyItemChanged(position);
+
+                Log.d("Crop Name - ", cropAdded.getCropName());
+                Log.d("Crop Bags - ", String.valueOf(cropAdded.getBags()));
+                Log.d("Crop Weight - ", String.valueOf(cropAdded.getWeight()));
             }
         });
 
@@ -82,10 +87,10 @@ public class EnterCropsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cropsTotalWeighed++;
-                Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed - 1));
+                Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed));
                 cropsAdapter.addNewToCropsTotalWeighed();
-                cropsAdapter.notifyItemInserted(cropsTotalWeighed - 1);
-                recyclerCrops.smoothScrollToPosition(cropsTotalWeighed - 1);
+                cropsAdapter.notifyItemInserted(cropsTotalWeighed);
+                recyclerCrops.smoothScrollToPosition(cropsTotalWeighed);
             }
         });
 

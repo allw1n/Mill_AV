@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewSerial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="S No."
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dividerSerialCrop"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerSerialCrop"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/viewSerial"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewCrop"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crop"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toEndOf="@id/dividerSerialCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dividerCropBags"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerCropBags"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/viewCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewCropBags"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCropBags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bags"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toEndOf="@id/dividerCropBags"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dividerBagsWeight"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerBagsWeight"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/viewCropBags"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewWeight"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toEndOf="@id/dividerBagsWeight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dividerWeightPrice"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerWeightPrice"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/viewWeight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewPricePerKg"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewPricePerKg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price/KG"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toEndOf="@id/dividerWeightPrice"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dividerPriceTotal"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerPriceTotal"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/viewPricePerKg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewTotalAmount"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintStart_toEndOf="@id/dividerPriceTotal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
