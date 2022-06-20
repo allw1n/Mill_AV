@@ -20,6 +20,9 @@
     <string name="plus_button">Plus Button</string>
     <string name="zero">0</string>
     <string name="select_crop">Select Crop*</string>
+    <string name="send">Send</string>
+    <string name="admin_log_in">Admin Log In</string>
+    <string name="employee_log_in">Employee Log In</string>
 
     <string-array name="crops_list">
         <item>Rice</item>

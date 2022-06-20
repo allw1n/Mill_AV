@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "user_details")
-public class User {
+@Entity(tableName = "employee_details")
+public class Employee {
 
     @NonNull
     @PrimaryKey
@@ -22,8 +22,8 @@ public class User {
     @ColumnInfo(name = "logged_in")
     private final boolean loggedIn;
 
-    public User(@NonNull String mobile, @NonNull String name,
-                @NonNull String password, boolean loggedIn) {
+    public Employee(@NonNull String mobile, @NonNull String name,
+                    @NonNull String password, boolean loggedIn) {
         this.mobile = mobile;
         this.name = name;
         this.password = password;

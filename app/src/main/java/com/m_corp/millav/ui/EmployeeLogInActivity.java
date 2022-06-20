@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
@@ -17,15 +16,15 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.m_corp.millav.R;
-import com.m_corp.millav.databinding.ActivityLogInBinding;
-import com.m_corp.millav.room.User;
-import com.m_corp.millav.viewmodel.UserViewModel;
+import com.m_corp.millav.databinding.ActivityEmployeeLogInBinding;
+import com.m_corp.millav.room.Employee;
+import com.m_corp.millav.viewmodel.EmployeeViewModel;
 
 import java.util.Objects;
 
-public class LogInActivity extends AppCompatActivity {
+public class EmployeeLogInActivity extends AppCompatActivity {
 
-    private ActivityLogInBinding binding;
+    private ActivityEmployeeLogInBinding binding;
     private static final String MOBILE = "mobile";
     private static final String PASSWORD = "password";
     private static final String NONE = "none";
@@ -39,7 +38,7 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLogInBinding.inflate(getLayoutInflater());
+        binding = ActivityEmployeeLogInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -61,7 +60,7 @@ public class LogInActivity extends AppCompatActivity {
         buttonRegister = binding.buttonRegister;
         buttonForgot = binding.buttonForgot;
 
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        EmployeeViewModel employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
 
         String savedMobile = sharedPrefs.getString(MOBILE, NONE);
         String savedPassword = sharedPrefs.getString(PASSWORD, NONE);
@@ -113,10 +112,10 @@ public class LogInActivity extends AppCompatActivity {
                     return;
                 }
 
-                User[] user = userViewModel.getUser(mobile);
-                if (user.length == 0)
+                Employee[] employee = employeeViewModel.getEmployee(mobile);
+                if (employee.length == 0)
                     layoutInputMobile.setError("Enter registered mobile number!");
-                else if (!password.equals(user[0].getPassword())) {
+                else if (!password.equals(employee[0].getPassword())) {
                     inputPassword.setText("");
                     layoutInputPassword.setError("Wrong password!");
                 }
@@ -130,9 +129,9 @@ public class LogInActivity extends AppCompatActivity {
                     }
                     editor.apply();
 
-                    userViewModel.loginUser(mobile, password, true);
+                    employeeViewModel.loginEmployee(mobile, password, true);
 
-                    Intent enterCropsIntent = new Intent(LogInActivity.this, EnterCropsActivity.class);
+                    Intent enterCropsIntent = new Intent(EmployeeLogInActivity.this, EnterCropsActivity.class);
                     enterCropsIntent.putExtra(MOBILE, mobile).putExtra(PASSWORD, password);
                     startActivity(enterCropsIntent);
                     finish();
@@ -143,7 +142,7 @@ public class LogInActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(LogInActivity.this, RegisterActivity.class);
+                Intent registerIntent = new Intent(EmployeeLogInActivity.this, RegisterEmployeeActivity.class);
                 startActivity(registerIntent);
             }
         });

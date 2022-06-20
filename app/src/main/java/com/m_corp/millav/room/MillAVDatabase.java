@@ -8,12 +8,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {User.class, Crop.class}, version = 1, exportSchema = false)
+@Database(entities = {Employee.class, Crop.class}, version = 1, exportSchema = false)
 public abstract class MillAVDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "mill_av_db";
 
-    public abstract UserDao userDao();
+    public abstract EmployeeDao userDao();
 
     public abstract CropDao cropDao();
 
@@ -32,7 +32,7 @@ public abstract class MillAVDatabase extends RoomDatabase {
                     cropDao = INSTANCE.cropDao();
 
                     if (cropDao.getACrop().length == 0) {
-                        String[] cropsList = {"Rice", "Wheat", "Arhar Dal"};
+                        String[] cropsList = {"None", "Rice", "Wheat", "Arhar Dal"};
                         for (String crop : cropsList) {
                             cropDao.insertCrop(new Crop(crop));
                         }

@@ -12,23 +12,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.m_corp.millav.R;
-import com.m_corp.millav.databinding.ActivityRegisterBinding;
-import com.m_corp.millav.room.User;
-import com.m_corp.millav.viewmodel.UserViewModel;
+import com.m_corp.millav.databinding.ActivityRegisterEmployeeBinding;
+import com.m_corp.millav.room.Employee;
+import com.m_corp.millav.viewmodel.EmployeeViewModel;
 
 import java.util.Objects;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterEmployeeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        ActivityRegisterEmployeeBinding binding = ActivityRegisterEmployeeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         ActionBar actionBar = getSupportActionBar();
@@ -53,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         buttonNewRegister = binding.buttonNewRegister;
 
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        EmployeeViewModel employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
 
         inputNewMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -141,11 +139,11 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 if (password.equals(confirmPassword)) {
-                    User[] checkUser = userViewModel.getUser(mobile);
-                    if (checkUser.length == 0) {
-                        User newUser = new User(mobile, name, confirmPassword, false);
-                        userViewModel.insertUser(newUser);
-                        Toast.makeText(RegisterActivity.this, "Registered successfully!", Toast.LENGTH_SHORT).show();
+                    Employee[] checkEmployee = employeeViewModel.getEmployee(mobile);
+                    if (checkEmployee.length == 0) {
+                        Employee newEmployee = new Employee(mobile, name, confirmPassword, false);
+                        employeeViewModel.insertEmployee(newEmployee);
+                        Toast.makeText(RegisterEmployeeActivity.this, "Registered successfully!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
                         layoutInputNewMobile.setError("Already registered! Use a different number.");

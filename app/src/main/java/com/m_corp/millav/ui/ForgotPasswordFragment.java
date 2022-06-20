@@ -19,8 +19,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.m_corp.millav.R;
-import com.m_corp.millav.room.User;
-import com.m_corp.millav.viewmodel.UserViewModel;
+import com.m_corp.millav.room.Employee;
+import com.m_corp.millav.viewmodel.EmployeeViewModel;
 
 import java.util.Objects;
 
@@ -33,7 +33,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
 
     public Application application;
 
-    private UserViewModel userViewModel;
+    private EmployeeViewModel employeeViewModel;
 
     public ForgotPasswordFragment() {
         // Required empty public constructor
@@ -65,7 +65,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
         inputNewPassword = rootView.findViewById(R.id.inputNewPassword);
         inputConfirmPassword = rootView.findViewById(R.id.inputConfirmPassword);
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
 
         inputForgotMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,8 +129,8 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
                     return;
                 }
 
-                User[] user = userViewModel.getUser(inputMobile);
-                if (user.length == 0) {
+                Employee[] employee = employeeViewModel.getUser(inputMobile);
+                if (employee.length == 0) {
                     layoutInputForgotMobile.setError("Enter registered mobile number!");
                     return;
                 }
@@ -144,7 +144,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
                     return;
                 }
                 if (newPassword.equals(confirmPassword)) {
-                    userViewModel.changePassword(inputMobile, confirmPassword);
+                    employeeViewModel.changePassword(inputMobile, confirmPassword);
                     Toast.makeText(application, "Password changed successfully!",
                             Toast.LENGTH_SHORT).show();
 
