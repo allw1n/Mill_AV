@@ -1,9 +1,15 @@
 package com.m_corp.millav.ui;
 
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE;
+import static com.m_corp.millav.utils.MillAVUtils.LOG_IN_TYPE;
+import static com.m_corp.millav.utils.MillAVUtils.NONE;
+import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
+
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
@@ -20,20 +26,25 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.m_corp.millav.R;
 import com.m_corp.millav.room.Employee;
+import com.m_corp.millav.room.Employer;
 import com.m_corp.millav.viewmodel.EmployeeViewModel;
+import com.m_corp.millav.viewmodel.EmployerViewModel;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ForgotPasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ForgotPasswordFragment extends BottomSheetDialogFragment {
 
     public Application application;
 
+    private TextInputLayout layoutInputForgotMobile, layoutInputNewPassword, layoutInputConfirmPassword;
+    private TextInputEditText inputForgotMobile, inputNewPassword, inputConfirmPassword;
+
     private EmployeeViewModel employeeViewModel;
+    private EmployerViewModel employerViewModel;
+
+    private SharedPreferences sharedPrefs;
+
+    public String loginType;
 
     public ForgotPasswordFragment() {
         // Required empty public constructor
@@ -51,11 +62,8 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_forgot_password, container, false);
-
-        TextInputLayout layoutInputForgotMobile, layoutInputNewPassword, layoutInputConfirmPassword;
-        TextInputEditText inputForgotMobile, inputNewPassword, inputConfirmPassword;
-        MaterialButton buttonResetPassword;
+        View rootView = inflater
+                .inflate(R.layout.fragment_forgot_password, container, false);
 
         layoutInputForgotMobile = rootView.findViewById(R.id.layoutInputForgotMobile);
         layoutInputNewPassword = rootView.findViewById(R.id.layoutInputNewPassword);
@@ -66,6 +74,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
         inputConfirmPassword = rootView.findViewById(R.id.inputConfirmPassword);
 
         employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
+        employerViewModel = new ViewModelProvider(this).get(EmployerViewModel.class);
 
         inputForgotMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,12 +122,12 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        buttonResetPassword = rootView.findViewById(R.id.buttonResetPassword);
+        MaterialButton buttonResetPassword = rootView.findViewById(R.id.buttonResetPassword);
 
         buttonResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPassword, confirmPassword, inputMobile;
+                String inputMobile, newPassword, confirmPassword;
 
                 inputMobile = Objects.requireNonNull(inputForgotMobile.getText()).toString();
                 newPassword = Objects.requireNonNull(inputNewPassword.getText()).toString();
@@ -129,10 +138,21 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
                     return;
                 }
 
-                Employee[] employee = employeeViewModel.getUser(inputMobile);
-                if (employee.length == 0) {
-                    layoutInputForgotMobile.setError("Enter registered mobile number!");
-                    return;
+                sharedPrefs = requireActivity()
+                        .getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                loginType = sharedPrefs.getString(LOG_IN_TYPE, NONE);
+                if (loginType.equals(EMPLOYEE)) {
+                    Employee[] employee = employeeViewModel.getEmployee(inputMobile);
+                    if (employee.length == 0) {
+                        layoutInputForgotMobile.setError("Enter registered mobile number!");
+                        return;
+                    }
+                } else {
+                    Employer[] employer = employerViewModel.getEmployer(inputMobile);
+                    if (employer.length == 0) {
+                        layoutInputForgotMobile.setError("Enter registered mobile number!");
+                        return;
+                    }
                 }
 
                 if (TextUtils.isEmpty(newPassword)) {
@@ -144,7 +164,11 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
                     return;
                 }
                 if (newPassword.equals(confirmPassword)) {
-                    employeeViewModel.changePassword(inputMobile, confirmPassword);
+                    if (loginType.equals(EMPLOYEE))
+                        employeeViewModel.changePassword(inputMobile, confirmPassword);
+                    else
+                        employerViewModel.changePassword(inputMobile, confirmPassword);
+
                     Toast.makeText(application, "Password changed successfully!",
                             Toast.LENGTH_SHORT).show();
 

@@ -8,10 +8,10 @@
     android:padding="56dp">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonAdmin"
+        android:id="@+id/buttonEmployer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/admin_log_in"
+        android:text="@string/employer_log_in"
         android:paddingTop="56dp"
         android:paddingBottom="56dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -29,7 +29,7 @@
         android:paddingBottom="56dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAdmin"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEmployer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>

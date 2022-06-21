@@ -2,9 +2,9 @@ package com.m_corp.millav.repository;
 
 import android.app.Application;
 
+import com.m_corp.millav.room.Employer;
+import com.m_corp.millav.room.EmployerDao;
 import com.m_corp.millav.room.MillAVDatabase;
-import com.m_corp.millav.room.Employee;
-import com.m_corp.millav.room.EmployeeDao;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -12,45 +12,45 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class EmployeeRepository {
+public class EmployerRepository {
 
-    private final EmployeeDao employeeDao;
+    private final EmployerDao employerDao;
     private final Application application;
 
-    public EmployeeRepository(Application application) {
+    public EmployerRepository(Application application) {
         this.application = application;
         MillAVDatabase database = MillAVDatabase.getDatabase(application);
-        employeeDao = database.employeeDao();
+        employerDao = database.employerDao();
     }
 
-    public Employee[] getEmployee(String mobile) {
+    public Employer[] getEmployer(String mobile) {
 
-        Employee[] employee = new Employee[0];
+        Employer[] employer = new Employer[0];
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        Callable<Employee[]> callable = new Callable<Employee[]>() {
+        Callable<Employer[]> callable = new Callable<Employer[]>() {
             @Override
-            public Employee[] call() throws Exception {
-                return employeeDao.getEmployee(mobile);
+            public Employer[] call() throws Exception {
+                return employerDao.getEmployer(mobile);
             }
         };
 
-        Future<Employee[]> future = executor.submit(callable);
+        Future<Employer[]> future = executor.submit(callable);
         try {
-            employee = future.get();
+            employer = future.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         executor.shutdown();
 
-        return employee;
+        return employer;
     }
 
-    public void insertEmployee(Employee employee) {
+    public void insertEmployer(Employer employer) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                employeeDao.insertEmployee(employee);
+                employerDao.insertEmployer(employer);
             }
         }).start();
     }
@@ -59,16 +59,16 @@ public class EmployeeRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                employeeDao.changePassword(mobile, password);
+                employerDao.changePassword(mobile, password);
             }
         }).start();
     }
 
-    public void loginEmployee(String mobile, String password, boolean loggedIn) {
+    public void loginEmployer(String mobile, String password, boolean loggedIn) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                employeeDao.loginEmployee(mobile, password, loggedIn);
+                employerDao.loginEmployer(mobile, password, loggedIn);
             }
         }).start();
     }

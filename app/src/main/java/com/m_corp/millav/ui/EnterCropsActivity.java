@@ -1,8 +1,20 @@
 package com.m_corp.millav.ui;
 
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_MOBILE;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_PASSWORD;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_MOBILE;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_PASSWORD;
+import static com.m_corp.millav.utils.MillAVUtils.LOG_IN_TYPE;
+import static com.m_corp.millav.utils.MillAVUtils.NONE;
+import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,6 +39,7 @@ import com.m_corp.millav.room.Crop;
 import com.m_corp.millav.viewmodel.CropViewModel;
 import com.m_corp.millav.viewmodel.EmployeeViewModel;
 import com.m_corp.millav.R;
+import com.m_corp.millav.viewmodel.EmployerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +47,15 @@ import java.util.Objects;
 
 public class EnterCropsActivity extends AppCompatActivity {
 
-    private EmployeeViewModel employeeViewModel;
     private CropViewModel cropViewModel;
     private List<Crop> cropsListFromSource = new ArrayList<>();
     private int cropsTotalWeighed = -1;
     private CropsAdapter cropsAdapter;
 
-    private static final String MOBILE = "mobile";
-    private static final String PASSWORD = "password";
-    private String savedMobile, savedPassword;
+    private String savedMobile, savedPassword, loginType;
+
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +76,19 @@ public class EnterCropsActivity extends AppCompatActivity {
         ExtendedFloatingActionButton fabSend = binding.fabSend;
         ExtendedFloatingActionButton fabAddNew = binding.fabAddNew;
 
-        employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
-
-        savedMobile = getIntent().getStringExtra(MOBILE);
-        savedPassword = getIntent().getStringExtra(PASSWORD);
+        sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        editor = sharedPrefs.edit();
+        loginType = sharedPrefs.getString(LOG_IN_TYPE, NONE);
+        if (loginType.equals(EMPLOYEE)) {
+            savedMobile = getIntent().getStringExtra(EMPLOYEE_MOBILE);
+            savedPassword = getIntent().getStringExtra(EMPLOYEE_PASSWORD);
+        } else {
+            savedMobile = getIntent().getStringExtra(EMPLOYER_MOBILE);
+            savedPassword = getIntent().getStringExtra(EMPLOYER_PASSWORD);
+            fabSend.setText(getString(R.string.make_bill));
+            fabSend.setIcon(AppCompatResources
+                    .getDrawable(this, R.drawable.ic_round_receipt_24));
+        }
 
         RecyclerView recyclerCrops = binding.recyclerCrops;
         recyclerCrops.setLayoutManager(new LinearLayoutManager(this));
@@ -177,10 +200,25 @@ public class EnterCropsActivity extends AppCompatActivity {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        employeeViewModel.loginUser(savedMobile, savedPassword, false);
+
+                        if (loginType.equals(EMPLOYEE)) {
+
+                            EmployeeViewModel employeeViewModel = new ViewModelProvider(
+                                    EnterCropsActivity.this)
+                                    .get(EmployeeViewModel.class);
+                            employeeViewModel.loginEmployee(savedMobile, savedPassword,
+                                    false);
+                        } else {
+
+                            EmployerViewModel employerViewModel = new ViewModelProvider(
+                                    EnterCropsActivity.this)
+                                    .get(EmployerViewModel.class);
+                            employerViewModel.loginEmployer(savedMobile, savedPassword,
+                                    false);
+                        }
 
                         startActivity(new Intent(EnterCropsActivity.this,
-                                EmployeeLogInActivity.class));
+                                MainActivity.class));
                         finish();
                     }
                 }).setNegativeButton("NO", new DialogInterface.OnClickListener() {

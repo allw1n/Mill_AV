@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "employee_details")
-public class Employee {
+@Entity(tableName = "employer_details")
+public class Employer {
 
     @NonNull
     @PrimaryKey
@@ -17,20 +17,15 @@ public class Employee {
     private final String name;
 
     @NonNull
-    @ColumnInfo(name = "employer_mobile")
-    private final String employerMobile;
-
-    @NonNull
     private final String password;
 
     @ColumnInfo(name = "logged_in")
     private final boolean loggedIn;
 
-    public Employee(@NonNull String mobile, @NonNull String name, @NonNull String employerMobile,
+    public Employer(@NonNull String mobile, @NonNull String name,
                     @NonNull String password, boolean loggedIn) {
         this.mobile = mobile;
         this.name = name;
-        this.employerMobile = employerMobile;
         this.password = password;
         this.loggedIn = loggedIn;
     }
@@ -43,11 +38,6 @@ public class Employee {
     @NonNull
     public String getName() {
         return name;
-    }
-
-    @NonNull
-    public String getEmployerMobile() {
-        return employerMobile;
     }
 
     @NonNull

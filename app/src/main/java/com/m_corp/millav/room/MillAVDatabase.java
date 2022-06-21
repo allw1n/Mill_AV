@@ -8,12 +8,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Employee.class, Crop.class}, version = 1, exportSchema = false)
+@Database(entities = {Employee.class, Employer.class, Crop.class, Bill.class},
+        version = 1, exportSchema = false)
 public abstract class MillAVDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "mill_av_db";
 
-    public abstract EmployeeDao userDao();
+    public abstract EmployeeDao employeeDao();
+
+    public abstract EmployerDao employerDao();
 
     public abstract CropDao cropDao();
 
