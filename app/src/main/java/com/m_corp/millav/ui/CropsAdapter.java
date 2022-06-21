@@ -113,9 +113,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
             Log.d("selectCrop set to", tempCropAdded.getCropName());
 
             viewTotalBags.setText(String.valueOf(tempCropAdded.getBags()));
-            if (tempCropAdded.getBags() > 1) {
-                Log.d("minusBag", "already enabled");
-            } else if (tempCropAdded.getBags() == 1) {
+            if (tempCropAdded.getBags() >= 1) {
                 minusBag.setClickable(true);
                 minusBag.setImageResource(R.drawable.ic_minus_enabled);
                 Log.d("minusBag", "enabled");

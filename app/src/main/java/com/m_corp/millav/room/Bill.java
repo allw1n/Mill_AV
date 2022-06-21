@@ -12,4 +12,12 @@ public class Bill {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "bill_number")
     private final int billNumber;
+
+    public Bill(int billNumber) {
+        this.billNumber = billNumber;
+    }
+
+    public int getBillNumber() {
+        return billNumber;
+    }
 }

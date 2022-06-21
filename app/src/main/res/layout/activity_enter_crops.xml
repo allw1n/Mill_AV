@@ -18,7 +18,7 @@
             android:id="@+id/layoutLoadedWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight: Truck + Bags*"
+            android:hint="@string/weight_truck_plus_bags"
             app:endIconMode="clear_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
             android:id="@+id/layoutUnloadedWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight: Truck - Bags*"
+            android:hint="@string/weight_truck_minus_bags"
             app:endIconMode="clear_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutLoadedWeight"
@@ -57,11 +57,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCrops"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/crop_item"
+            android:layout_height="0dp"
+            android:paddingTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutUnloadedWeight"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/crop_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,4 +25,6 @@
     <string name="employer_log_in">Employer Log In</string>
     <string name="employee_log_in">Employee Log In</string>
     <string name="employer_mobile_no">Employer Mobile No.*</string>
+    <string name="weight_truck_plus_bags">Weight: Truck + Bags*</string>
+    <string name="weight_truck_minus_bags">Weight: Truck - Bags*</string>
 </resources>

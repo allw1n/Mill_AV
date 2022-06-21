@@ -4,11 +4,13 @@ import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE;
 import static com.m_corp.millav.utils.MillAVUtils.LOG_IN_TYPE;
 import static com.m_corp.millav.utils.MillAVUtils.NONE;
 import static com.m_corp.millav.utils.MillAVUtils.REQUIRED;
+import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -32,6 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
     private String loginType;
 
     private TextInputLayout layoutInputNewMobile;
+
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         buttonNewRegister = binding.buttonNewRegister;
 
-        loginType = getIntent().getStringExtra(LOG_IN_TYPE);
+        sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        editor = sharedPrefs.edit();
+        loginType = sharedPrefs.getString(LOG_IN_TYPE, NONE);
         if (loginType.equals(EMPLOYEE)) layoutInputEmployerMobile.setVisibility(View.VISIBLE);
 
         inputNewMobile.addTextChangedListener(new TextWatcher() {
