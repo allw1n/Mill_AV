@@ -15,10 +15,8 @@ import java.util.concurrent.Future;
 public class EmployeeRepository {
 
     private final EmployeeDao employeeDao;
-    private final Application application;
 
     public EmployeeRepository(Application application) {
-        this.application = application;
         MillAVDatabase database = MillAVDatabase.getDatabase(application);
         employeeDao = database.employeeDao();
     }

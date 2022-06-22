@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.m_corp.millav" >
+    package="com.m_corp.millav">
 
     <application
         android:allowBackup="true"
@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MillAV"
-        tools:targetApi="32" >
+        tools:targetApi="32">
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,10 +37,16 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.ForgotPasswordActivity"
+            android:name=".ui.EmployerDashboard"
             android:exported="false"
-            android:label="@string/forgot_password"
-            android:parentActivityName=".ui.LogInActivity"
+            android:label="@string/employer_dashboard"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.PendingBillsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.EmployerDashboard"
+            android:label="@string/pending_bills"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

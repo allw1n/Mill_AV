@@ -78,6 +78,12 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         cropsTotalWeighed.add(new CropsAddedPojo());
     }
 
+    public void removeFromCropsTotalWeighed(int position) {
+        Log.d("Removed crop", cropsTotalWeighed.get(position).getCropName());
+        cropsTotalWeighed.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class CropViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, AdapterView.OnItemClickListener{
 
         private final TextInputLayout layoutSelectCrop;

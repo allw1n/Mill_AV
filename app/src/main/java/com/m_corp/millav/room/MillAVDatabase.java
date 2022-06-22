@@ -20,30 +20,9 @@ public abstract class MillAVDatabase extends RoomDatabase {
 
     public abstract CropDao cropDao();
 
+    public abstract BillDao billDao();
+
     private static volatile MillAVDatabase INSTANCE;
-
-    private static final RoomDatabase.Callback populateCropsList = new RoomDatabase.Callback() {
-
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    CropDao cropDao;
-                    cropDao = INSTANCE.cropDao();
-
-                    if (cropDao.getACrop().length == 0) {
-                        String[] cropsList = {"None", "Rice", "Wheat", "Arhar Dal"};
-                        for (String crop : cropsList) {
-                            cropDao.insertCrop(new Crop(crop));
-                        }
-                    }
-                }
-            }).start();
-        }
-    };
 
     public static MillAVDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -52,7 +31,6 @@ public abstract class MillAVDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MillAVDatabase.class, DB_NAME)
                             .fallbackToDestructiveMigration()
-                            .addCallback(populateCropsList)
                             .build();
                 }
             }

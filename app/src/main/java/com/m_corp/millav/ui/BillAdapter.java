@@ -16,8 +16,8 @@ import java.util.List;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder> {
 
-    private Context context;
-    private List<CropForBillPojo> cropsForBill;
+    private final Context context;
+    private final List<CropForBillPojo> cropsForBill;
 
     public BillAdapter(Context context, List<CropForBillPojo> cropsForBill) {
         this.context = context;
@@ -38,13 +38,13 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cropsForBill.size();
     }
 
     class BillViewHolder extends RecyclerView.ViewHolder {
 
-        private final MaterialTextView viewSerial, viewCrop, viewCropBags, viewWeight, viewPricePerKg
-                , viewTotalAmount;
+        private final MaterialTextView viewSerial, viewCrop, viewCropBags, viewWeight,
+                viewPricePerKg, viewTotalAmount;
 
         public BillViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,7 +62,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             viewSerial.setText(cropForBill.getSerial());
             viewCrop.setText(cropForBill.getCropName());
             viewCropBags.setText(cropForBill.getBags());
-            viewWeight.setText(String.valueOf(cropForBill.getWeight()));
+            viewWeight.setText(String.valueOf(cropForBill.getTotalWeight()));
             viewPricePerKg.setText(String.valueOf(cropForBill.getPricePerKg()));
             viewTotalAmount.setText(String.valueOf(cropForBill.getPriceTotal()));
         }

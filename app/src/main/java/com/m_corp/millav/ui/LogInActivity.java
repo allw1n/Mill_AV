@@ -1,12 +1,14 @@
 package com.m_corp.millav.ui;
 
-import static com.m_corp.millav.utils.MillAVUtils.BOTTOM_SHEET_TAG;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_LOG_IN_SAVED;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_MOBILE;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_PASSWORD;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER;
+import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_LOG_IN_SAVED;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_MOBILE;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_PASSWORD;
+import static com.m_corp.millav.utils.MillAVUtils.FORGOT_PASSWORD_TAG;
 import static com.m_corp.millav.utils.MillAVUtils.LOG_IN_TYPE;
 import static com.m_corp.millav.utils.MillAVUtils.NONE;
 import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
@@ -48,6 +50,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private String loginType, savedEmployerMobile, savedEmployerPassword,
             savedEmployeeMobile, savedEmployeePassword;
+    private boolean loginSaved;
 
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor editor;
@@ -146,26 +149,28 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ForgotPasswordFragment fragment = ForgotPasswordFragment.newInstance();
                 fragment.application = getApplication();
-                fragment.show(getSupportFragmentManager(), BOTTOM_SHEET_TAG);
+                fragment.show(getSupportFragmentManager(), FORGOT_PASSWORD_TAG);
             }
         });
     }
 
     private void getSetMobilePassword() {
         if (loginType.equals(EMPLOYEE)) {
+            loginSaved = sharedPrefs.getBoolean(EMPLOYEE_LOG_IN_SAVED, false);
             savedEmployeeMobile = sharedPrefs.getString(EMPLOYEE_MOBILE, NONE);
             savedEmployeePassword = sharedPrefs.getString(EMPLOYEE_PASSWORD, NONE);
 
-            if (!savedEmployeeMobile.equals(NONE)) {
+            if (loginSaved) {
                 inputMobile.setText(savedEmployeeMobile);
                 inputPassword.setText(savedEmployeePassword);
                 checkRememberMe.setChecked(true);
             }
         } else {
+            loginSaved = sharedPrefs.getBoolean(EMPLOYER_LOG_IN_SAVED, false);
             savedEmployerMobile = sharedPrefs.getString(EMPLOYER_MOBILE, NONE);
             savedEmployerPassword = sharedPrefs.getString(EMPLOYER_PASSWORD, NONE);
 
-            if (!savedEmployerMobile.equals(NONE)) {
+            if (loginSaved) {
                 inputMobile.setText(savedEmployerMobile);
                 inputPassword.setText(savedEmployerPassword);
                 checkRememberMe.setChecked(true);
@@ -184,13 +189,9 @@ public class LogInActivity extends AppCompatActivity {
             layoutInputPassword.setError("Wrong password!");
         }
         else {
-            if (checkRememberMe.isChecked()) {
-                editor.putString(EMPLOYEE_MOBILE, mobile);
-                editor.putString(EMPLOYEE_PASSWORD, password);
-            } else {
-                editor.putString(EMPLOYEE_MOBILE, NONE);
-                editor.putString(EMPLOYEE_PASSWORD, NONE);
-            }
+            editor.putBoolean(EMPLOYEE_LOG_IN_SAVED, checkRememberMe.isChecked());
+            editor.putString(EMPLOYEE_MOBILE, mobile);
+            editor.putString(EMPLOYEE_PASSWORD, password);
             editor.apply();
 
             employeeViewModel.loginEmployee(mobile, password, true);
@@ -216,23 +217,19 @@ public class LogInActivity extends AppCompatActivity {
             layoutInputPassword.setError("Wrong password!");
         }
         else {
-            if (checkRememberMe.isChecked()) {
-                editor.putString(EMPLOYER_MOBILE, mobile);
-                editor.putString(EMPLOYER_PASSWORD, password);
-            } else {
-                editor.putString(EMPLOYER_MOBILE, NONE);
-                editor.putString(EMPLOYER_PASSWORD, NONE);
-            }
+            editor.putBoolean(EMPLOYER_LOG_IN_SAVED, checkRememberMe.isChecked());
+            editor.putString(EMPLOYER_MOBILE, mobile);
+            editor.putString(EMPLOYER_PASSWORD, password);
             editor.apply();
 
             employerViewModel.loginEmployer(mobile, password, true);
 
-            Intent enterCropsIntent = new Intent(LogInActivity.this,
-                    EnterCropsActivity.class);
-            enterCropsIntent.putExtra(EMPLOYER_MOBILE, mobile)
+            Intent dashboardIntent = new Intent(LogInActivity.this,
+                    EmployerDashboard.class);
+            dashboardIntent.putExtra(EMPLOYER_MOBILE, mobile)
                     .putExtra(EMPLOYER_PASSWORD, password);
             setResult(RESULT_OK);
-            startActivity(enterCropsIntent);
+            startActivity(dashboardIntent);
             finish();
         }
     }

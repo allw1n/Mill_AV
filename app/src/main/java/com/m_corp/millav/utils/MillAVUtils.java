@@ -3,6 +3,8 @@ package com.m_corp.millav.utils;
 public class MillAVUtils {
 
     public static final String LOG_IN_TYPE = "log_in_type";
+    public static final String EMPLOYEE_LOG_IN_SAVED = "employee_log_in_saved";
+    public static final String EMPLOYER_LOG_IN_SAVED = "employer_log_in_saved";
 
     public static final String EMPLOYER = "employer";
     public static final String EMPLOYER_MOBILE = "employer_mobile";
@@ -15,7 +17,6 @@ public class MillAVUtils {
     public static final String NONE = "none";
     public static final String REQUIRED = "Required";
     public static final String SHARED_PREFS = "shared_prefs";
-    public static final String BOTTOM_SHEET_TAG = "ForgotBottomSheetFragment";
-
-
+    public static final String FORGOT_PASSWORD_TAG = "ForgotPasswordFragment";
+    public static final String ADD_NEW_CROP_TAG = "AddNewCropFragment";
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp"
+    tools:context=".ui.EmployerDashboard">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonMakeBill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/make_bill"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:icon="@drawable/ic_round_receipt_24"
+        app:iconGravity="textStart"
+        android:paddingTop="48dp"
+        android:paddingBottom="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonAddNewCrop"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAddNewCrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_crop"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:icon="@drawable/ic_round_add_24"
+        app:iconGravity="textStart"
+        android:paddingTop="48dp"
+        android:paddingBottom="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonMakeBill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonEnterCrops"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonEnterCrops"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_crops"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:icon="@drawable/ic_round_edit_24"
+        app:iconGravity="textStart"
+        android:paddingTop="48dp"
+        android:paddingBottom="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonAddNewCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

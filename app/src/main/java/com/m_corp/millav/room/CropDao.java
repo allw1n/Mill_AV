@@ -16,6 +16,6 @@ public interface CropDao {
     @Query("SELECT * FROM crops_list")
     LiveData<List<Crop>> getCrops();
 
-    @Query("SELECT * FROM crops_list LIMIT 1")
-    Crop[] getACrop();
+    @Query("SELECT * FROM crops_list WHERE crop_name = :cropName")
+    Crop[] checkForCrop(String cropName);
 }

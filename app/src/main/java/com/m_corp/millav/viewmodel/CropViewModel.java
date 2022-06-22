@@ -30,4 +30,8 @@ public class CropViewModel extends AndroidViewModel {
     public LiveData<List<Crop>> getCrops() {
         return crops;
     }
+
+    public Crop[] checkForCrop(String cropName) {
+        return cropRepository.checkForCrop(cropName);
+    }
 }

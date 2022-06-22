@@ -13,12 +13,28 @@ public class Crop {
     @ColumnInfo(name = "crop_name")
     private final String cropName;
 
-    public Crop(@NonNull String cropName) {
+    @ColumnInfo(name = "price_per_kg")
+    private final float pricePerKg;
+
+    @ColumnInfo(name = "fixed_weight")
+    private final boolean fixedWeight;
+
+    public Crop(@NonNull String cropName, float pricePerKg, boolean fixedWeight) {
         this.cropName = cropName;
+        this.pricePerKg = pricePerKg;
+        this.fixedWeight = fixedWeight;
     }
 
     @NonNull
     public String getCropName() {
         return cropName;
+    }
+
+    public float getPricePerKg() {
+        return pricePerKg;
+    }
+
+    public boolean isFixedWeight() {
+        return fixedWeight;
     }
 }

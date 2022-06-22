@@ -27,4 +27,13 @@
     <string name="employer_mobile_no">Employer Mobile No.*</string>
     <string name="weight_truck_plus_bags">Weight: Truck + Bags*</string>
     <string name="weight_truck_minus_bags">Weight: Truck - Bags*</string>
+    <string name="add_new_crop">Add New Crop</string>
+    <string name="employer_dashboard">Employer Dashboard</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="enter_details_of_new_crop">Enter details of new crop.</string>
+    <string name="crop_name">Crop Name*</string>
+    <string name="price_per_kg">Price/Kg*</string>
+    <string name="fixed_weight">Fixed Weight</string>
+    <string name="pending_bills">Pending Bills</string>
+    <string name="no_bills_pending">No bills pending.</string>
 </resources>
