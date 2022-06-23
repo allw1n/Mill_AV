@@ -30,7 +30,6 @@ public class AddNewCropFragment extends BottomSheetDialogFragment {
 
     private TextInputLayout layoutInputNewCropName, layoutInputPricePerKg;
     private TextInputEditText inputNewCropName, inputPricePerKg;
-    private MaterialCheckBox checkFixedWeight;
 
     private CropViewModel cropViewModel;
 
@@ -58,8 +57,6 @@ public class AddNewCropFragment extends BottomSheetDialogFragment {
 
         inputNewCropName = rootView.findViewById(R.id.inputNewCropName);
         inputPricePerKg = rootView.findViewById(R.id.inputPricePerKg);
-
-        checkFixedWeight = rootView.findViewById(R.id.checkFixedWeight);
 
         MaterialButton buttonAddCrop = rootView.findViewById(R.id.buttonAddCrop);
 
@@ -102,8 +99,6 @@ public class AddNewCropFragment extends BottomSheetDialogFragment {
                 newCropName = Objects.requireNonNull(inputNewCropName.getText()).toString();
                 pricePerKg = Objects.requireNonNull(inputPricePerKg.getText()).toString();
 
-                fixedWeight = checkFixedWeight.isChecked();
-
                 if (TextUtils.isEmpty(newCropName)) {
                     layoutInputNewCropName.setError("Required!");
                     return;
@@ -115,7 +110,7 @@ public class AddNewCropFragment extends BottomSheetDialogFragment {
 
                 Crop[] crop = cropViewModel.checkForCrop(newCropName);
                 if (crop.length == 0) {
-                    Crop newCrop = new Crop(newCropName, Float.parseFloat(pricePerKg), fixedWeight);
+                    Crop newCrop = new Crop(newCropName, Float.parseFloat(pricePerKg));
                     cropViewModel.insertCrop(newCrop);
 
                     requireActivity()

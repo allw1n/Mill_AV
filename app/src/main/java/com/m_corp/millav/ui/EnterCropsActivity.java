@@ -30,13 +30,17 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.m_corp.millav.databinding.ActivityEnterCropsBinding;
+import com.m_corp.millav.room.Bill;
 import com.m_corp.millav.room.Crop;
+import com.m_corp.millav.viewmodel.BillViewModel;
 import com.m_corp.millav.viewmodel.CropViewModel;
 import com.m_corp.millav.viewmodel.EmployeeViewModel;
 import com.m_corp.millav.R;
@@ -203,9 +207,18 @@ public class EnterCropsActivity extends AppCompatActivity {
                 unloaded = Float.parseFloat(unloadedWeight);
 
                 if (validate(loaded, unloaded)) {
-                    startActivity(new Intent(EnterCropsActivity.this,
-                            EnterCropsActivity.class));
+                    BillViewModel billViewModel = new ViewModelProvider(
+                            EnterCropsActivity.this).get(BillViewModel.class);
+
+                    Bill newBill = cropsAdapter.setBillDetails();
+
+                    billViewModel.insertBill(newBill);
+                    Toast.makeText(EnterCropsActivity.this, "Bill added to database.",
+                            Toast.LENGTH_SHORT).show();
                     finish();
+                } else {
+                    Snackbar.make(findViewById(R.id.layoutEnterCrops),
+                            R.string.weights_do_not_match, Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -250,10 +263,9 @@ public class EnterCropsActivity extends AppCompatActivity {
         boolean validated = false;
         float calculatedWeight = loaded - unloaded;
         float enteredWeight = cropsAdapter.getEnteredWeight();
+        float weightDifference = calculatedWeight - enteredWeight;
 
-        if (calculatedWeight == Math.floor(enteredWeight))
-            validated = true;
-        else if (calculatedWeight == Math.ceil(enteredWeight))
+        if (-5 <= weightDifference && weightDifference <= 5)
             validated = true;
 
         return validated;

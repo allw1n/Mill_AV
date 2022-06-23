@@ -2,6 +2,9 @@ package com.m_corp.millav.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +16,16 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.m_corp.millav.R;
+import com.m_corp.millav.room.Bill;
 import com.m_corp.millav.room.Crop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHolder> {
 
@@ -45,7 +51,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     @NonNull
     @Override
     public CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CropViewHolder(LayoutInflater.from(context).inflate(R.layout.crop_item, parent, false));
+        return new CropViewHolder(LayoutInflater.from(context).inflate(R.layout.enter_crop_item, parent, false));
     }
 
     @Override
@@ -66,14 +72,6 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         notifyDataSetChanged();
     }
 
-    public float getEnteredWeight() {
-        float totalWeightInKg = 0;
-        for (CropsAddedPojo crop: cropsTotalWeighed) {
-            totalWeightInKg +=  crop.getWeight();
-        }
-        return totalWeightInKg;
-    }
-
     public void addNewToCropsTotalWeighed() {
         cropsTotalWeighed.add(new CropsAddedPojo());
     }
@@ -84,11 +82,40 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         notifyItemRemoved(position);
     }
 
+    public float getEnteredWeight() {
+        float totalWeightInKg = 0;
+        for (CropsAddedPojo crop: cropsTotalWeighed) {
+            totalWeightInKg +=  crop.getWeight() - (crop.getBags() * 0.2);
+        }
+        Log.d("totalWeightInKg", String.valueOf(totalWeightInKg));
+        return totalWeightInKg;
+    }
+
+    public Bill setBillDetails() {
+        Bill tempBill = new Bill();
+
+        StringBuilder namesBuilder = new StringBuilder();
+        StringBuilder bagsBuilder = new StringBuilder();
+        StringBuilder weightBuilder = new StringBuilder();
+
+        for (CropsAddedPojo crop: cropsTotalWeighed) {
+            namesBuilder.append(crop.getCropName()).append(", ");
+            bagsBuilder.append(crop.getBags()).append(", ");
+            weightBuilder.append(crop.getWeight()).append(", ");
+        }
+        tempBill.setCropNames(namesBuilder.toString());
+        tempBill.setCropBags(bagsBuilder.toString());
+        tempBill.setTotalWeights(weightBuilder.toString());
+
+        return tempBill;
+    }
+
     class CropViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-        private final TextInputLayout layoutSelectCrop;
+        private final TextInputLayout layoutSelectCrop, layoutInputWeightOfBagAdded;
+        private final TextInputEditText inputWeightOfBagAdded;
         private final MaterialAutoCompleteTextView selectCrop;
-        private final MaterialTextView viewTotalBags, viewTotalWeight;
+        private final MaterialTextView viewTotalBags, viewTotalWeightOfBags;
         private final AppCompatImageButton minusBag, plusBag;
 
         public CropViewHolder(@NonNull View itemView) {
@@ -96,14 +123,29 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
             layoutSelectCrop = itemView.findViewById(R.id.layoutSelectCrop);
             selectCrop = itemView.findViewById(R.id.selectCrop);
-            viewTotalBags = itemView.findViewById(R.id.viewBagsAdded);
-            viewTotalWeight = itemView.findViewById(R.id.viewTotalWeight);
+            viewTotalWeightOfBags = itemView.findViewById(R.id.viewTotalWeightOfBags);
             minusBag = itemView.findViewById(R.id.minusBag);
+            viewTotalBags = itemView.findViewById(R.id.viewBagsAdded);
             plusBag = itemView.findViewById(R.id.plusBag);
+            layoutInputWeightOfBagAdded = itemView.findViewById(R.id.layoutInputWeightOfBagAdded);
+            inputWeightOfBagAdded = itemView.findViewById(R.id.inputWeightOfBagAdded);
 
             selectCrop.setOnItemClickListener(this);
             minusBag.setOnClickListener(this);
             plusBag.setOnClickListener(this);
+            inputWeightOfBagAdded.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (layoutInputWeightOfBagAdded.isErrorEnabled())
+                        layoutInputWeightOfBagAdded.setErrorEnabled(false);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
         }
 
         void bindTo(int position) {
@@ -128,25 +170,48 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
                 minusBag.setImageResource(R.drawable.ic_minus_disabled);
                 Log.d("minusBag", "disabled");
             }
-            viewTotalWeight.setText(String.valueOf(tempCropAdded.getWeight()));
+            viewTotalWeightOfBags.setText(String.valueOf(tempCropAdded.getWeight()));
+
+            inputWeightOfBagAdded.setText(String.valueOf(tempCropAdded.getWeightAltered()));
         }
 
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Log.d("Adapter position", String.valueOf(adapterPosition));
+
+            if (cropsTotalWeighed.get(adapterPosition).getCropName().equals(NONE)) {
+                layoutSelectCrop.setError("Required!");
+                return;
+            }
+
             int numberOfBags = cropsTotalWeighed.get(adapterPosition).getBags();
+            float weightAltered;
+
+            String inputWeight = Objects.requireNonNull(inputWeightOfBagAdded.getText()).toString();
+            if (TextUtils.isEmpty(inputWeight)) {
+                layoutInputWeightOfBagAdded.setError("Set!");
+                return;
+            } else {
+                weightAltered = Float.parseFloat(inputWeight);
+                if (weightAltered == 0) {
+                    layoutInputWeightOfBagAdded.setError("Set!");
+                    return;
+                }
+            }
 
             if (view.getId() == R.id.minusBag) {
                 if (numberOfBags >= 1) {
                     cropsTotalWeighed.get(adapterPosition).setBags(numberOfBags - 1);
+                    float totalWeight = cropsTotalWeighed.get(adapterPosition).getWeight();
+                    cropsTotalWeighed.get(adapterPosition).setWeight(totalWeight - weightAltered);
+                    cropsTotalWeighed.get(adapterPosition).setWeightAltered(weightAltered);
                 }
             } else {
-                if (cropsTotalWeighed.get(adapterPosition).getCropName().equals(NONE)) {
-                    layoutSelectCrop.setError("Required");
-                    return;
-                }
                 cropsTotalWeighed.get(adapterPosition).setBags(numberOfBags + 1);
+                float totalWeight = cropsTotalWeighed.get(adapterPosition).getWeight();
+                cropsTotalWeighed.get(adapterPosition).setWeight(totalWeight + weightAltered);
+                cropsTotalWeighed.get(adapterPosition).setWeightAltered(weightAltered);
             }
 
             onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,

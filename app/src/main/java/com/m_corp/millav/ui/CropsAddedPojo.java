@@ -10,10 +10,13 @@ public class CropsAddedPojo {
 
     private float weight;
 
+    private float weightAltered;
+
     public CropsAddedPojo() {
         this.cropName = "None";
         this.bags = 0;
         this.weight = 0;
+        this.weightAltered = 0;
     }
 
     public String getCropName() {
@@ -38,5 +41,13 @@ public class CropsAddedPojo {
 
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    public float getWeightAltered() {
+        return weightAltered;
+    }
+
+    public void setWeightAltered(float previousWeightAdded) {
+        this.weightAltered = previousWeightAdded;
     }
 }

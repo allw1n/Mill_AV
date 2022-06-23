@@ -18,17 +18,13 @@ public class Bill {
     @ColumnInfo(name = "crop_bags")
     private String cropBags;
 
-    @ColumnInfo(name = "price_per_kg")
-    private String pricePerKg;
+    @ColumnInfo(name = "total_weights")
+    private String totalWeights;
 
-    private boolean pending;
+    private boolean pending = true;
 
     public int getBillNumber() {
         return billNumber;
-    }
-
-    public void setBillNumber(int billNumber) {
-        this.billNumber = billNumber;
     }
 
     public String getCropNames() {
@@ -47,12 +43,12 @@ public class Bill {
         this.cropBags = cropBags;
     }
 
-    public String getPricePerKg() {
-        return pricePerKg;
+    public String getTotalWeights() {
+        return totalWeights;
     }
 
-    public void setPricePerKg(String pricePerKg) {
-        this.pricePerKg = pricePerKg;
+    public void setTotalWeights(String totalWeights) {
+        this.totalWeights = totalWeights;
     }
 
     public boolean isPending() {

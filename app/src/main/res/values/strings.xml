@@ -36,4 +36,7 @@
     <string name="fixed_weight">Fixed Weight</string>
     <string name="pending_bills">Pending Bills</string>
     <string name="no_bills_pending">No bills pending.</string>
+    <string name="kg">Kg</string>
+    <string name="total_weight">Total Weight</string>
+    <string name="weights_do_not_match">Weights do not match!</string>
 </resources>

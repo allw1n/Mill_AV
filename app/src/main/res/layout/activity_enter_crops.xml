@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutEnterCrops"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.EnterCropsActivity">
@@ -63,7 +64,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutUnloadedWeight"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/crop_item" />
+            tools:listitem="@layout/enter_crop_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
