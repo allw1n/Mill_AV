@@ -2,6 +2,8 @@ package com.m_corp.millav.repository;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.m_corp.millav.room.Bill;
 import com.m_corp.millav.room.BillDao;
 import com.m_corp.millav.room.MillAVDatabase;
@@ -17,7 +19,7 @@ import java.util.concurrent.Future;
 public class BillRepository {
 
     private final BillDao billDao;
-    private List<Bill> bills;
+    private LiveData<List<Bill>> bills;
 
     public BillRepository(Application application) {
         MillAVDatabase database = MillAVDatabase.getDatabase(application);
@@ -28,14 +30,14 @@ public class BillRepository {
     private void setBills() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        Callable<List<Bill>> callable = new Callable<List<Bill>>() {
+        Callable<LiveData<List<Bill>>> callable = new Callable<LiveData<List<Bill>>>() {
             @Override
-            public List<Bill> call() throws Exception {
+            public LiveData<List<Bill>> call() throws Exception {
                 return billDao.getPendingBills(true);
             }
         };
 
-        Future<List<Bill>> future = executor.submit(callable);
+        Future<LiveData<List<Bill>>> future = executor.submit(callable);
 
         try {
             bills = future.get();
@@ -53,7 +55,7 @@ public class BillRepository {
         }).start();
     }
 
-    public List<Bill> getPendingBills() {
+    public LiveData<List<Bill>> getPendingBills() {
         return bills;
     }
 

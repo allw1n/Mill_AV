@@ -29,6 +29,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,7 +45,6 @@ import com.m_corp.millav.viewmodel.BillViewModel;
 import com.m_corp.millav.viewmodel.CropViewModel;
 import com.m_corp.millav.viewmodel.EmployeeViewModel;
 import com.m_corp.millav.R;
-import com.m_corp.millav.viewmodel.EmployerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +111,8 @@ public class EnterCropsActivity extends AppCompatActivity {
             }
         });
 
-        cropsAdapter.setOnRecyclerViewItemClickListener(new CropsAdapter.onRecyclerViewItemClickListener() {
+        cropsAdapter.setOnRecyclerItemClickListener(
+                new CropsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position, CropsAddedPojo cropAdded) {
                 Log.d("Position", String.valueOf(position));
@@ -269,5 +270,14 @@ public class EnterCropsActivity extends AppCompatActivity {
             validated = true;
 
         return validated;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

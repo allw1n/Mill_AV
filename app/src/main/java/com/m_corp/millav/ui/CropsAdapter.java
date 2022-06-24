@@ -33,14 +33,14 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     private final List<CharSequence> cropsListForCAA = new ArrayList<>();
     private final List<CropsAddedPojo> cropsTotalWeighed = new ArrayList<>();
     private static final String NONE = "None";
-    private onRecyclerViewItemClickListener onRecyclerViewItemClickListener;
+    private OnRecyclerItemClickListener itemClickListener;
 
-    public void setOnRecyclerViewItemClickListener(onRecyclerViewItemClickListener
-                                                           onRecyclerViewItemClickListener) {
-        this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+    public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener
+                                                           itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
-    public interface onRecyclerViewItemClickListener {
+    public interface OnRecyclerItemClickListener {
         void onItemClickListener(View view, int position, CropsAddedPojo cropDetails);
     }
 
@@ -51,7 +51,8 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     @NonNull
     @Override
     public CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CropViewHolder(LayoutInflater.from(context).inflate(R.layout.enter_crop_item, parent, false));
+        return new CropViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.enter_crop_item, parent, false));
     }
 
     @Override
@@ -110,7 +111,8 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         return tempBill;
     }
 
-    class CropViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, AdapterView.OnItemClickListener{
+    class CropViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, AdapterView.OnItemClickListener{
 
         private final TextInputLayout layoutSelectCrop, layoutInputWeightOfBagAdded;
         private final TextInputEditText inputWeightOfBagAdded;
@@ -214,7 +216,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
                 cropsTotalWeighed.get(adapterPosition).setWeightAltered(weightAltered);
             }
 
-            onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,
+            itemClickListener.onItemClickListener(view, adapterPosition,
                     cropsTotalWeighed.get(adapterPosition));
         }
 
@@ -229,7 +231,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
             Log.d("weighedCrop", cropsTotalWeighed.get(adapterPosition).getCropName());
 
-            onRecyclerViewItemClickListener.onItemClickListener(view, adapterPosition,
+            itemClickListener.onItemClickListener(view, adapterPosition,
                     cropsTotalWeighed.get(adapterPosition));
         }
     }

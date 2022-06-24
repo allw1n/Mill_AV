@@ -1,5 +1,6 @@
 package com.m_corp.millav.room;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -13,7 +14,7 @@ public interface BillDao {
     public void insertBill(Bill bill);
 
     @Query("SELECT * FROM bill_details WHERE pending = :pending")
-    public List<Bill> getPendingBills(boolean pending);
+    public LiveData<List<Bill>> getPendingBills(boolean pending);
 
     @Query("SELECT * FROM bill_details WHERE bill_number =:billNumber")
     public Bill getBillDetails(int billNumber);

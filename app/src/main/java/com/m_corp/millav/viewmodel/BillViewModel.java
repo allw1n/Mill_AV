@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.m_corp.millav.repository.BillRepository;
 import com.m_corp.millav.room.Bill;
@@ -14,7 +15,7 @@ public class BillViewModel extends AndroidViewModel {
 
     private final BillRepository billRepository;
 
-    private final List<Bill> bills;
+    private final LiveData<List<Bill>> bills;
 
     public BillViewModel(@NonNull Application application) {
         super(application);
@@ -22,7 +23,7 @@ public class BillViewModel extends AndroidViewModel {
         bills = billRepository.getPendingBills();
     }
 
-    public List<Bill> getPendingBills() {
+    public LiveData<List<Bill>> getPendingBills() {
         return bills;
     }
 

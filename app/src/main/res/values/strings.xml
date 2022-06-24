@@ -39,4 +39,16 @@
     <string name="kg">Kg</string>
     <string name="total_weight">Total Weight</string>
     <string name="weights_do_not_match">Weights do not match!</string>
+    <string name="bill_number_header">Bill Number:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_customer_information">Add customer information.</string>
+    <string name="confirm">Confirm</string>
+    <string name="address">Address*</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="name_header">Name:</string>
+    <string name="mobile_header">Mobile:</string>
+    <string name="address_header">Address:</string>
+    <string name="date_header">Date:</string>
+    <string name="bill_no_header">Bill No:</string>
 </resources>

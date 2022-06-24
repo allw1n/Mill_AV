@@ -19,4 +19,12 @@ public class MillAVUtils {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String FORGOT_PASSWORD_TAG = "ForgotPasswordFragment";
     public static final String ADD_NEW_CROP_TAG = "AddNewCropFragment";
+    public static final String CUSTOMER_INFO_TAG = "CustomerInfoFragment";
+
+    public static final String BILL_NUMBER = "bill_number";
+    public static final int ZERO = 0;
+
+    public static final String CUSTOMER_NAME = "customer_name";
+    public static final String CUSTOMER_MOBILE = "customer_mobile";
+    public static final String CUSTOMER_ADDRESS = "customer_address";
 }
