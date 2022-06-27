@@ -81,8 +81,8 @@ public class EnterCropsActivity extends AppCompatActivity {
         loginType = sharedPrefs.getString(LOG_IN_TYPE, NONE);
 
         if (loginType.equals(EMPLOYEE)) {
-            savedMobile = getIntent().getStringExtra(EMPLOYEE_MOBILE);
-            savedPassword = getIntent().getStringExtra(EMPLOYEE_PASSWORD);
+            savedMobile = sharedPrefs.getString(EMPLOYEE_MOBILE, NONE);
+            savedPassword = sharedPrefs.getString(EMPLOYEE_PASSWORD, NONE);
         } else {
 
             ActionBar actionBar = getSupportActionBar();
@@ -90,11 +90,8 @@ public class EnterCropsActivity extends AppCompatActivity {
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
 
-            savedMobile = getIntent().getStringExtra(EMPLOYER_MOBILE);
-            savedPassword = getIntent().getStringExtra(EMPLOYER_PASSWORD);
-            fabSend.setText(getString(R.string.make_bill));
-            fabSend.setIcon(AppCompatResources
-                    .getDrawable(this, R.drawable.ic_round_receipt_24));
+            savedMobile = sharedPrefs.getString(EMPLOYER_MOBILE, NONE);
+            savedPassword = sharedPrefs.getString(EMPLOYER_PASSWORD, NONE);
         }
 
         RecyclerView recyclerCrops = binding.recyclerCrops;

@@ -72,8 +72,8 @@
         android:id="@+id/fabSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_round_send_24"
-        android:text="@string/send"
+        app:icon="@drawable/ic_round_save_24"
+        android:text="@string/save"
         android:layout_gravity="bottom|start"
         android:layout_marginStart="12dp"
         android:layout_marginBottom="12dp"/>

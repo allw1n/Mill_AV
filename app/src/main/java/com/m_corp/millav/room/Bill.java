@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.android.material.internal.ParcelableSparseArray;
+
 @Entity(tableName = "bill_details")
 public class Bill {
 
@@ -17,6 +19,9 @@ public class Bill {
 
     @ColumnInfo(name = "crop_bags")
     private String cropBags;
+
+    @ColumnInfo(name = "crop_prices")
+    private String cropPrices;
 
     @ColumnInfo(name = "total_weights")
     private String totalWeights;
@@ -41,6 +46,14 @@ public class Bill {
 
     public void setCropBags(String cropBags) {
         this.cropBags = cropBags;
+    }
+
+    public String getCropPrices() {
+        return cropPrices;
+    }
+
+    public void setCropPrices(String cropPrices) {
+        this.cropPrices = cropPrices;
     }
 
     public String getTotalWeights() {

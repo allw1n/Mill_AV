@@ -18,6 +18,7 @@
     
     <item name="windowSplashScreenBackground" type="color">@color/white</item>
 
+    <!-- BottomSheetDialogTheme -->
     <style name="AppBottomSheetDialogTheme"
         parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
@@ -27,4 +28,11 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/round_light_background</item>
     </style>
+    
+    <!-- MakeBillTHeme -->
+    <style name="Theme.MillAV.MakeBillActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    
 </resources>

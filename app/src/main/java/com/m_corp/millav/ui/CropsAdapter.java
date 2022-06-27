@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -22,6 +24,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.m_corp.millav.R;
 import com.m_corp.millav.room.Bill;
 import com.m_corp.millav.room.Crop;
+import com.m_corp.millav.viewmodel.CropViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
     private final Context context;
     private final List<CharSequence> cropsListForCAA = new ArrayList<>();
+    private final List<CharSequence> cropPricesList = new ArrayList<>();
     private final List<CropsAddedPojo> cropsTotalWeighed = new ArrayList<>();
     private static final String NONE = "None";
     private OnRecyclerItemClickListener itemClickListener;
@@ -44,8 +48,8 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
         void onItemClickListener(View view, int position, CropsAddedPojo cropDetails);
     }
 
-    public CropsAdapter(Context context) {
-        this.context = context;
+    public CropsAdapter(AppCompatActivity activity) {
+        this.context = activity;
     }
 
     @NonNull
@@ -69,6 +73,7 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
     public void setCropsList (List<Crop> cropsListFromSource) {
         for (Crop crop: cropsListFromSource) {
             cropsListForCAA.add(crop.getCropName());
+            cropPricesList.add(String.valueOf(crop.getPricePerKg()));
         }
         notifyDataSetChanged();
     }
@@ -97,15 +102,30 @@ public class CropsAdapter extends RecyclerView.Adapter<CropsAdapter.CropViewHold
 
         StringBuilder namesBuilder = new StringBuilder();
         StringBuilder bagsBuilder = new StringBuilder();
+        StringBuilder pricesBuilder = new StringBuilder();
         StringBuilder weightBuilder = new StringBuilder();
 
         for (CropsAddedPojo crop: cropsTotalWeighed) {
             namesBuilder.append(crop.getCropName()).append(", ");
             bagsBuilder.append(crop.getBags()).append(", ");
+
+            int index = cropsListForCAA.indexOf(crop.getCropName());
+            pricesBuilder.append(cropPricesList.get(index)).append(", ");
+
             weightBuilder.append(crop.getWeight()).append(", ");
         }
+        namesBuilder
+                .deleteCharAt(namesBuilder.length() - 1).deleteCharAt(namesBuilder.length() - 1);
+        bagsBuilder
+                .deleteCharAt(bagsBuilder.length() - 1).deleteCharAt(bagsBuilder.length() - 1);
+        pricesBuilder
+                .deleteCharAt(pricesBuilder.length() - 1).deleteCharAt(pricesBuilder.length() - 1);
+        weightBuilder
+                .deleteCharAt(weightBuilder.length() - 1).deleteCharAt(weightBuilder.length() - 1);
+
         tempBill.setCropNames(namesBuilder.toString());
         tempBill.setCropBags(bagsBuilder.toString());
+        tempBill.setCropPrices(pricesBuilder.toString());
         tempBill.setTotalWeights(weightBuilder.toString());
 
         return tempBill;

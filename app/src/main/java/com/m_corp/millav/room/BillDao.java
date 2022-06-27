@@ -11,14 +11,14 @@ import java.util.List;
 public interface BillDao {
 
     @Insert
-    public void insertBill(Bill bill);
+    void insertBill(Bill bill);
 
     @Query("SELECT * FROM bill_details WHERE pending = :pending")
-    public LiveData<List<Bill>> getPendingBills(boolean pending);
+    LiveData<List<Bill>> getPendingBills(boolean pending);
 
     @Query("SELECT * FROM bill_details WHERE bill_number =:billNumber")
-    public Bill getBillDetails(int billNumber);
+    Bill getBillDetails(int billNumber);
 
     @Query("UPDATE bill_details SET pending = :pending WHERE bill_number =:billNumber")
-    public void updatePendingBill(int billNumber, boolean pending);
+    void updatePendingBill(int billNumber, boolean pending);
 }

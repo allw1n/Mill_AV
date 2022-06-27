@@ -198,8 +198,6 @@ public class LogInActivity extends AppCompatActivity {
 
             Intent enterCropsIntent = new Intent(LogInActivity.this,
                     EnterCropsActivity.class);
-            enterCropsIntent.putExtra(EMPLOYEE_MOBILE, mobile)
-                    .putExtra(EMPLOYEE_PASSWORD, password);
             setResult(RESULT_OK);
             startActivity(enterCropsIntent);
             finish();
@@ -226,8 +224,6 @@ public class LogInActivity extends AppCompatActivity {
 
             Intent dashboardIntent = new Intent(LogInActivity.this,
                     EmployerDashboard.class);
-            dashboardIntent.putExtra(EMPLOYER_MOBILE, mobile)
-                    .putExtra(EMPLOYER_PASSWORD, password);
             setResult(RESULT_OK);
             startActivity(dashboardIntent);
             finish();

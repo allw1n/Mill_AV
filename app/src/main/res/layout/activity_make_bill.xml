@@ -6,156 +6,208 @@
     android:layout_height="match_parent"
     tools:context=".ui.MakeBillActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="vertical"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="72dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewShopName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/shop_name"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/dividerShopName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewShopName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/viewCustomerName" />
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_header"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dividerShopName"
-            app:layout_constraintBottom_toTopOf="@+id/viewMobile"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shop_name"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewMobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mobile_header"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewName"
-            app:layout_constraintBottom_toTopOf="@+id/viewAddress"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewShopName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/viewCustomerName" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/address_header"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewMobile"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_header"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerShopName"
+                app:layout_constraintEnd_toStartOf="@id/viewCustomerName"
+                app:layout_constraintBottom_toTopOf="@+id/viewMobile"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewCustomerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/viewCustomerMobile"
-            app:layout_constraintStart_toEndOf="@+id/viewName"
-            app:layout_constraintTop_toBottomOf="@id/dividerShopName"
-            tools:text="Samael Fallen" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_header"
+                android:layout_marginStart="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewName"
+                app:layout_constraintEnd_toStartOf="@id/viewCustomerMobile"
+                app:layout_constraintBottom_toTopOf="@+id/viewAddress"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewCustomerMobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/viewMobile"
-            app:layout_constraintTop_toBottomOf="@id/viewCustomerName"
-            app:layout_constraintBottom_toTopOf="@id/viewCustomerAddress"
-            tools:text="1234567890"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_header"
+                android:layout_marginStart="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewMobile"
+                app:layout_constraintEnd_toStartOf="@id/viewCustomerAddress"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewCustomerAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxLines="6"
-            android:layout_marginEnd="6dp"
-            app:layout_constraintStart_toEndOf="@+id/viewAddress"
-            app:layout_constraintTop_toBottomOf="@id/viewCustomerMobile"
-            app:layout_constraintEnd_toStartOf="@id/dividerCustomerInfoVertical"
-            tools:text="3rd Floor, C-2, BLock C, Sector 22, Gautam Buddha Nagar, Noida, Uttar Pradesh, PINCODE - 201301" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:maxLines="2"
+                app:layout_constraintStart_toEndOf="@+id/viewName"
+                app:layout_constraintTop_toTopOf="@id/viewName"
+                app:layout_constraintBottom_toBottomOf="@+id/viewName"
+                tools:text="Samael Fallen" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/dividerCustomerInfoVertical"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dividerShopName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/dividerCustomerInfo"
-            style=""/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewCustomerMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintStart_toEndOf="@+id/viewMobile"
+                app:layout_constraintTop_toTopOf="@id/viewMobile"
+                app:layout_constraintBottom_toBottomOf="@id/viewMobile"
+                tools:text="1234567890"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date_header"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
-            app:layout_constraintTop_toBottomOf="@id/dividerShopName"
-            app:layout_constraintBottom_toTopOf="@+id/viewBill"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewCustomerAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="6"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintStart_toEndOf="@+id/viewAddress"
+                app:layout_constraintTop_toTopOf="@id/viewAddress"
+                app:layout_constraintEnd_toStartOf="@id/dividerCustomerInfoVertical"
+                tools:text="3rd Floor, C-2, BLock C, Sector 22, Gautam Buddha Nagar, Noida, Uttar Pradesh, PINCODE - 201301" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewBillDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/viewDate"
-            app:layout_constraintTop_toBottomOf="@id/dividerShopName"
-            app:layout_constraintBottom_toTopOf="@+id/viewBillNumber"
-            tools:text="11 June 1993"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerCustomerInfoVertical"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dividerShopName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/dividerCustomerInfo"
+                style=""/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewBill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bill_no_header"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
-            app:layout_constraintTop_toBottomOf="@id/viewDate" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_header"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
+                app:layout_constraintTop_toBottomOf="@id/dividerShopName"
+                app:layout_constraintEnd_toStartOf="@id/viewBillDate"
+                app:layout_constraintBottom_toTopOf="@+id/viewBill"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/viewBillNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/viewBill"
-            app:layout_constraintTop_toBottomOf="@id/viewBillDate"
-            tools:text="0987654321"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewBillDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintStart_toEndOf="@+id/viewDate"
+                app:layout_constraintTop_toTopOf="@id/viewDate"
+                app:layout_constraintBottom_toBottomOf="@+id/viewDate"
+                tools:text="11 June 1993"/>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/dividerCustomerInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewCustomerAddress"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bill_no_header"
+                android:layout_marginStart="6dp"
+                app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
+                app:layout_constraintTop_toBottomOf="@id/viewDate" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerBill"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            tools:listitem="@layout/bill_list_item"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dividerCustomerInfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewBillNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintStart_toEndOf="@+id/viewBill"
+                app:layout_constraintTop_toTopOf="@id/viewBill"
+                app:layout_constraintBottom_toBottomOf="@id/viewBill"
+                tools:text="0987654321"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerCustomerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewCustomerAddress"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/bill_list_item"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerCustomerInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/viewCumulativeAmount" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/viewCumulativeAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:textAlignment="textEnd"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerBill"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabPrint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/print"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        app:icon="@drawable/ic_round_picture_as_pdf_24"
+        app:iconGravity="end"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
