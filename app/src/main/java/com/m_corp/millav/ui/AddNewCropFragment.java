@@ -26,8 +26,6 @@ import java.util.Objects;
 
 public class AddNewCropFragment extends BottomSheetDialogFragment {
 
-    public Application application;
-
     private TextInputLayout layoutInputNewCropName, layoutInputPricePerKg;
     private TextInputEditText inputNewCropName, inputPricePerKg;
 

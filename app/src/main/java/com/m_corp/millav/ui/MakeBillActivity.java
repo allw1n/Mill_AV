@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.m_corp.millav.databinding.ActivityMakeBillBinding;
 import com.m_corp.millav.room.Employer;
@@ -67,12 +67,19 @@ public class MakeBillActivity extends AppCompatActivity {
         viewBillNumber.setText(String.valueOf(billNumber));
 
         recyclerBill.setLayoutManager(new LinearLayoutManager(this));
-        MakeBillAdapter makeBillAdapter = new MakeBillAdapter(MakeBillActivity.this, billNumber);
+        MakeBillAdapter makeBillAdapter = new MakeBillAdapter(
+                MakeBillActivity.this, billNumber);
         recyclerBill.setAdapter(makeBillAdapter);
         recyclerBill.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         viewCumulativeAmount.setText(String.valueOf(makeBillAdapter.getCumulativeAmount()));
+
+        fabPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     private String getDate() {

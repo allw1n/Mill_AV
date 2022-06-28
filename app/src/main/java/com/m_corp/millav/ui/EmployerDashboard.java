@@ -56,7 +56,6 @@ public class EmployerDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AddNewCropFragment newCropFragment = AddNewCropFragment.newInstance();
-                newCropFragment.application = getApplication();
                 newCropFragment.show(getSupportFragmentManager(), ADD_NEW_CROP_TAG);
             }
         });

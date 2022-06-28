@@ -58,4 +58,7 @@
     <string name="price_kg">Price/KG</string>
     <string name="total">Total</string>
     <string name="print">Print</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="rs">₹</string>
 </resources>

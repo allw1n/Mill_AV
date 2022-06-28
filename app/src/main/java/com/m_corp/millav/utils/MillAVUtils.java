@@ -20,6 +20,7 @@ public class MillAVUtils {
     public static final String FORGOT_PASSWORD_TAG = "ForgotPasswordFragment";
     public static final String ADD_NEW_CROP_TAG = "AddNewCropFragment";
     public static final String CUSTOMER_INFO_TAG = "CustomerInfoFragment";
+    public static final String CHANGE_PRICE_TAG = "ChangePriceFragment";
 
     public static final String BILL_NUMBER = "bill_number";
     public static final int ZERO = 0;

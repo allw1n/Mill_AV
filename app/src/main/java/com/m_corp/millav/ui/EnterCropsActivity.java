@@ -211,8 +211,14 @@ public class EnterCropsActivity extends AppCompatActivity {
                     Bill newBill = cropsAdapter.setBillDetails();
 
                     billViewModel.insertBill(newBill);
+
                     Toast.makeText(EnterCropsActivity.this, "Bill added to database.",
                             Toast.LENGTH_SHORT).show();
+
+                    if (loginType.equals(EMPLOYEE)) {
+                        startActivity(new Intent(
+                                EnterCropsActivity.this, EnterCropsActivity.class));
+                    }
                     finish();
                 } else {
                     Snackbar.make(findViewById(R.id.layoutEnterCrops),
