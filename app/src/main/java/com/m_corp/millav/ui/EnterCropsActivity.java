@@ -3,7 +3,6 @@ package com.m_corp.millav.ui;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_MOBILE;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYEE_PASSWORD;
-import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_MOBILE;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_PASSWORD;
 import static com.m_corp.millav.utils.MillAVUtils.LOG_IN_TYPE;
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -54,7 +52,7 @@ public class EnterCropsActivity extends AppCompatActivity {
 
     private List<Crop> cropsListFromSource = new ArrayList<>();
     private int cropsTotalWeighed = -1;
-    private CropsAdapter cropsAdapter;
+    private EnterCropsAdapter enterCropsAdapter;
 
     private String savedMobile, savedPassword, loginType;
 
@@ -65,14 +63,14 @@ public class EnterCropsActivity extends AppCompatActivity {
         ActivityEnterCropsBinding binding = ActivityEnterCropsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        TextInputLayout layoutLoadedWeight, layoutUnloadedWeight;
-        TextInputEditText inputLoadedWeight, inputUnloadedWeight;
+        TextInputLayout layoutLoadedWeight, layoutTruckWeight;
+        TextInputEditText inputLoadedWeight, inputTruckWeight;
 
         layoutLoadedWeight = binding.layoutLoadedWeight;
-        layoutUnloadedWeight = binding.layoutUnloadedWeight;
+        layoutTruckWeight = binding.layoutTruckWeight;
 
         inputLoadedWeight = binding.inputLoadedWeight;
-        inputUnloadedWeight = binding.inputUnloadedWeight;
+        inputTruckWeight = binding.inputTruckWeight;
 
         ExtendedFloatingActionButton fabSend = binding.fabSend;
         ExtendedFloatingActionButton fabAddNew = binding.fabAddNew;
@@ -96,20 +94,20 @@ public class EnterCropsActivity extends AppCompatActivity {
 
         RecyclerView recyclerCrops = binding.recyclerCrops;
         recyclerCrops.setLayoutManager(new LinearLayoutManager(this));
-        cropsAdapter = new CropsAdapter(this);
-        recyclerCrops.setAdapter(cropsAdapter);
+        enterCropsAdapter = new EnterCropsAdapter(this);
+        recyclerCrops.setAdapter(enterCropsAdapter);
 
         CropViewModel cropViewModel = new ViewModelProvider(this).get(CropViewModel.class);
         cropViewModel.getCrops().observe(this, new Observer<List<Crop>>() {
             @Override
             public void onChanged(@NonNull final List<Crop> cropsList) {
                 cropsListFromSource = cropsList;
-                cropsAdapter.setCropsList(cropsListFromSource);
+                enterCropsAdapter.setCropsList(cropsListFromSource);
             }
         });
 
-        cropsAdapter.setOnRecyclerItemClickListener(
-                new CropsAdapter.OnRecyclerItemClickListener() {
+        enterCropsAdapter.setOnRecyclerItemClickListener(
+                new EnterCropsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position, CropsAddedPojo cropAdded) {
                 Log.d("Position", String.valueOf(position));
@@ -119,7 +117,7 @@ public class EnterCropsActivity extends AppCompatActivity {
                 if (view.getId() == R.id.selectCropItem) {
                     Log.d("Crop name changed", cropAdded.getCropName());
                 }
-                cropsAdapter.notifyItemChanged(position);
+                enterCropsAdapter.notifyItemChanged(position);
 
                 Log.d("Crop Name - ", cropAdded.getCropName());
                 Log.d("Crop Bags - ", String.valueOf(cropAdded.getBags()));
@@ -139,7 +137,7 @@ public class EnterCropsActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 cropsTotalWeighed--;
-                cropsAdapter.removeFromCropsTotalWeighed(viewHolder.getAdapterPosition());
+                enterCropsAdapter.removeFromCropsTotalWeighed(viewHolder.getAdapterPosition());
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerCrops);
@@ -158,14 +156,14 @@ public class EnterCropsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        inputUnloadedWeight.addTextChangedListener(new TextWatcher() {
+        inputTruckWeight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (layoutUnloadedWeight.isErrorEnabled())
-                    layoutUnloadedWeight.setErrorEnabled(false);
+                if (layoutTruckWeight.isErrorEnabled())
+                    layoutTruckWeight.setErrorEnabled(false);
             }
 
             @Override
@@ -177,8 +175,8 @@ public class EnterCropsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 cropsTotalWeighed++;
                 Log.d("Add new crop on fab", String.valueOf(cropsTotalWeighed));
-                cropsAdapter.addNewToCropsTotalWeighed();
-                cropsAdapter.notifyItemInserted(cropsTotalWeighed);
+                enterCropsAdapter.addNewToCropsTotalWeighed();
+                enterCropsAdapter.notifyItemInserted(cropsTotalWeighed);
                 recyclerCrops.smoothScrollToPosition(cropsTotalWeighed);
             }
         });
@@ -186,29 +184,29 @@ public class EnterCropsActivity extends AppCompatActivity {
         fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String loadedWeight, unloadedWeight;
-                float loaded, unloaded, netCalculated;
+                String loadedWeight, truckWeight;
+                float loaded, truck, netCalculated;
 
                 loadedWeight = Objects.requireNonNull(inputLoadedWeight.getText()).toString();
-                unloadedWeight = Objects.requireNonNull(inputUnloadedWeight.getText()).toString();
+                truckWeight = Objects.requireNonNull(inputTruckWeight.getText()).toString();
 
                 if (TextUtils.isEmpty(loadedWeight)) {
                     layoutLoadedWeight.setError("Required");
                     return;
                 }
-                if (TextUtils.isEmpty(unloadedWeight)) {
-                    layoutUnloadedWeight.setError("Required");
+                if (TextUtils.isEmpty(truckWeight)) {
+                    layoutTruckWeight.setError("Required");
                     return;
                 }
 
                 loaded = Float.parseFloat(loadedWeight);
-                unloaded = Float.parseFloat(unloadedWeight);
+                truck = Float.parseFloat(truckWeight);
 
-                if (validate(loaded, unloaded)) {
+                if (isValid(loaded, truck)) {
                     BillViewModel billViewModel = new ViewModelProvider(
                             EnterCropsActivity.this).get(BillViewModel.class);
 
-                    Bill newBill = cropsAdapter.setBillDetails();
+                    Bill newBill = enterCropsAdapter.setBillDetails();
 
                     billViewModel.insertBill(newBill);
 
@@ -262,17 +260,8 @@ public class EnterCropsActivity extends AppCompatActivity {
             finish();
     }
 
-    private boolean validate(float loaded, float unloaded) {
-
-        boolean validated = false;
-        float calculatedWeight = loaded - unloaded;
-        float enteredWeight = cropsAdapter.getEnteredWeight();
-        float weightDifference = calculatedWeight - enteredWeight;
-
-        if (-5 <= weightDifference && weightDifference <= 5)
-            validated = true;
-
-        return validated;
+    private boolean isValid(float loaded, float truck) {
+        return enterCropsAdapter.validate(loaded - truck);
     }
 
     @Override

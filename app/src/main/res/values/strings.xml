@@ -61,4 +61,5 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="rs">₹</string>
+    <string name="truck_required">Truck*</string>
 </resources>

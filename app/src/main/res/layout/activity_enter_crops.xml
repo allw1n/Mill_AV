@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layoutUnloadedWeight"
+            app:layout_constraintBottom_toTopOf="@id/layoutTruckWeight"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -36,10 +36,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutUnloadedWeight"
+            android:id="@+id/layoutTruckWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/weight_truck_minus_bags"
+            android:hint="@string/truck_required"
             app:endIconMode="clear_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutLoadedWeight"
@@ -48,7 +48,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputUnloadedWeight"
+                android:id="@+id/inputTruckWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal" />
@@ -62,7 +62,7 @@
             android:paddingTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutUnloadedWeight"
+            app:layout_constraintTop_toBottomOf="@id/layoutTruckWeight"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/enter_crop_item" />
 

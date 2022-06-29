@@ -29,6 +29,8 @@ import com.m_corp.millav.viewmodel.BillViewModel;
 
 import org.w3c.dom.Text;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,12 +77,21 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
         cropPrices = new ArrayList<>(Arrays.asList(bill.getCropPrices().split(",")));
         cropWeights = new ArrayList<>(Arrays.asList(bill.getTotalWeights().split(",")));
 
+        DecimalFormat dF = new DecimalFormat("#.##");
+
+        int totalBags = 0;
         for (int i = 0; i < cropNames.size(); i++) {
-            float amount =
+            float unformattedAmount =
                     Float.parseFloat(cropWeights.get(i)) * Float.parseFloat(cropPrices.get(i));
+            float amount = Float.parseFloat(dF.format(unformattedAmount));
             cumulativeAmount += amount;
             cropTotalAmounts.add(i, String.valueOf(amount));
+
+            totalBags += Integer.parseInt(cropBags.get(i));
         }
+
+        //Rs.3 labor cost per bag
+        cumulativeAmount -= totalBags * 3;
     }
 
     float getCumulativeAmount() {
