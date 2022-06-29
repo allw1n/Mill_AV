@@ -2,39 +2,25 @@ package com.m_corp.millav.ui;
 
 import static com.m_corp.millav.utils.MillAVUtils.CHANGE_PRICE_TAG;
 
-import android.app.Application;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.DialogCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.m_corp.millav.R;
 import com.m_corp.millav.room.Bill;
 import com.m_corp.millav.viewmodel.BillViewModel;
 
-import org.w3c.dom.Text;
-
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBillViewHolder> {
 
@@ -45,6 +31,8 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
     private List<String> cropWeights;
     private List<String> cropTotalAmounts = new ArrayList<>();
     private float cumulativeAmount = 0;
+    private int totalBags = 0;
+    private int laborCostPerBag;
 
     public MakeBillAdapter(AppCompatActivity activity, int billNumber) {
         this.activity = activity;
@@ -77,9 +65,10 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
         cropPrices = new ArrayList<>(Arrays.asList(bill.getCropPrices().split(",")));
         cropWeights = new ArrayList<>(Arrays.asList(bill.getTotalWeights().split(",")));
 
+        laborCostPerBag = 3;
+
         DecimalFormat dF = new DecimalFormat("#.##");
 
-        int totalBags = 0;
         for (int i = 0; i < cropNames.size(); i++) {
             float unformattedAmount =
                     Float.parseFloat(cropWeights.get(i)) * Float.parseFloat(cropPrices.get(i));
@@ -88,10 +77,12 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
             cropTotalAmounts.add(i, String.valueOf(amount));
 
             totalBags += Integer.parseInt(cropBags.get(i));
+            Log.d("totalBags", String.valueOf(totalBags));
         }
 
-        //Rs.3 labor cost per bag
-        cumulativeAmount -= totalBags * 3;
+        Log.d("cumulativeAmount before", String.valueOf(cumulativeAmount));
+        cumulativeAmount -= totalBags * laborCostPerBag;
+        Log.d("cumulativeAmount after", String.valueOf(cumulativeAmount));
     }
 
     float getCumulativeAmount() {
@@ -103,6 +94,7 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
         for (String amount: cropTotalAmounts) {
             cumulativeAmount += Float.parseFloat(amount);
         }
+        cumulativeAmount -= totalBags * laborCostPerBag;
     }
 
     class MakeBillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
