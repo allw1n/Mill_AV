@@ -28,4 +28,7 @@ public class MillAVUtils {
     public static final String CUSTOMER_NAME = "customer_name";
     public static final String CUSTOMER_MOBILE = "customer_mobile";
     public static final String CUSTOMER_ADDRESS = "customer_address";
+
+    public static final int A4_WIDTH = 595;
+    public static final int A4_HEIGHT = 841;
 }
