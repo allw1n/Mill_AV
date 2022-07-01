@@ -12,6 +12,7 @@ import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -34,8 +36,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MakeBillActivity extends AppCompatActivity {
@@ -117,28 +121,61 @@ public class MakeBillActivity extends AppCompatActivity {
 
         PdfDocument pdfDocument = new PdfDocument();
 
+
         try {
+            List<View> viewList = new ArrayList<>();
+            ConstraintLayout constraintLayout = findViewById(R.id.pdfLayout);
+            int childCount = constraintLayout.getChildCount();
+            Log.d("childCount", String.valueOf(childCount));
+
+            for (int i = 0; i < childCount; i++) {
+                viewList.add(i, constraintLayout.getChildAt(i));
+            }
+
             PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(
-                    A4_WIDTH, A4_HEIGHT,1).create();
+                    A4_WIDTH, A4_HEIGHT, 1).create();
 
             PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
-            View content = findViewById(android.R.id.content).findViewById(R.id.pdfLayout);
+            for (int i = 0; i < viewList.size(); i++) {
 
-            int pageHeightInPixel = content.getHeight();
-            int pageWidthInPixel = content.getWidth();
-            content.measure(
-                    View.MeasureSpec.makeMeasureSpec(
-                            pageWidthInPixel, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(
-                            pageHeightInPixel, View.MeasureSpec.UNSPECIFIED));
+                View content = viewList.get(i);
+                Log.d("content", String.valueOf(content.getContentDescription()));
 
-            content.layout(0, 0, pageWidthInPixel, pageHeightInPixel);
-            content.draw(page.getCanvas());
+                int pageWidthInPixel = content.getWidth();
+                Log.d("pageWidthInPixel", String.valueOf(pageWidthInPixel));
+                int pageHeightInPixel = content.getHeight();
+                Log.d("pageHeightInPixel", String.valueOf(pageHeightInPixel));
 
+                content.measure(
+                        View.MeasureSpec.makeMeasureSpec(
+                                pageWidthInPixel, View.MeasureSpec.UNSPECIFIED),
+                        View.MeasureSpec.makeMeasureSpec(
+                                pageHeightInPixel, View.MeasureSpec.UNSPECIFIED));
+
+                int measuredWidth = content.getMeasuredWidth();
+                if (measuredWidth != 0)
+                    pageWidthInPixel = measuredWidth;
+                Log.d("measuredPageWidth", String.valueOf(pageWidthInPixel));
+
+                int measuredHeight = content.getMeasuredHeight();
+                if (measuredHeight != 0)
+                    pageHeightInPixel = measuredHeight;
+                Log.d("measuredPageHeight", String.valueOf(pageHeightInPixel));
+
+                content.layout(0, 0, pageWidthInPixel, pageHeightInPixel);
+                content.draw(page.getCanvas());
+
+                page.getCanvas().restore();
+
+                content.invalidate();
+                content.requestLayout();
+            }
             pdfDocument.finishPage(page);
 
-            pdfDocument.writeTo(new FileOutputStream(pdfFile));
+            FileOutputStream fOS = new FileOutputStream(pdfFile);
+            pdfDocument.writeTo(fOS);
+            fOS.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

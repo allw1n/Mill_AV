@@ -7,7 +7,6 @@
     tools:context=".ui.MakeBillActivity">
 
     <ScrollView
-        android:id="@+id/pdfLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
@@ -17,8 +16,11 @@
         android:layout_marginBottom="72dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pdfLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/pdf_bg"
+            android:contentDescription="pdfLayout">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewShopName"
@@ -28,17 +30,19 @@
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="viewShopName"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/dividerShopName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_marginTop="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewShopName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/viewCustomerName" />
+                app:layout_constraintBottom_toTopOf="@id/viewCustomerName"
+                android:contentDescription="dividerShopName"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewName"
@@ -50,7 +54,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerShopName"
                 app:layout_constraintEnd_toStartOf="@id/viewCustomerName"
-                app:layout_constraintBottom_toTopOf="@+id/viewMobile"/>
+                app:layout_constraintBottom_toTopOf="@+id/viewMobile"
+                android:contentDescription="viewName"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewMobile"
@@ -61,7 +66,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewName"
                 app:layout_constraintEnd_toStartOf="@id/viewCustomerMobile"
-                app:layout_constraintBottom_toTopOf="@+id/viewAddress"/>
+                app:layout_constraintBottom_toTopOf="@+id/viewAddress"
+                android:contentDescription="viewMobile"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewAddress"
@@ -71,7 +77,8 @@
                 android:layout_marginStart="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewMobile"
-                app:layout_constraintEnd_toStartOf="@id/viewCustomerAddress"/>
+                app:layout_constraintEnd_toStartOf="@id/viewCustomerAddress"
+                android:contentDescription="viewAddress"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewCustomerName"
@@ -83,7 +90,8 @@
                 app:layout_constraintStart_toEndOf="@+id/viewName"
                 app:layout_constraintTop_toTopOf="@id/viewName"
                 app:layout_constraintBottom_toBottomOf="@+id/viewName"
-                tools:text="Samael Fallen" />
+                tools:text="Samael Fallen"
+                android:contentDescription="viewCustomerName"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewCustomerMobile"
@@ -94,7 +102,8 @@
                 app:layout_constraintStart_toEndOf="@+id/viewMobile"
                 app:layout_constraintTop_toTopOf="@id/viewMobile"
                 app:layout_constraintBottom_toBottomOf="@id/viewMobile"
-                tools:text="1234567890"/>
+                tools:text="1234567890"
+                android:contentDescription="viewCustomerMobile"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewCustomerAddress"
@@ -106,7 +115,8 @@
                 app:layout_constraintStart_toEndOf="@+id/viewAddress"
                 app:layout_constraintTop_toTopOf="@id/viewAddress"
                 app:layout_constraintEnd_toStartOf="@id/dividerCustomerInfoVertical"
-                tools:text="3rd Floor, C-2, BLock C, Sector 22, Gautam Buddha Nagar, Noida, Uttar Pradesh, PINCODE - 201301" />
+                tools:text="3rd Floor, C-2, BLock C, Sector 22, Gautam Buddha Nagar, Noida, Uttar Pradesh, PINCODE - 201301"
+                android:contentDescription="viewCustomerAddress"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/dividerCustomerInfoVertical"
@@ -116,7 +126,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/dividerShopName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/dividerCustomerInfo"
-                style=""/>
+                android:contentDescription="dividerCustomerInfoVertical"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewDate"
@@ -128,7 +138,8 @@
                 app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
                 app:layout_constraintTop_toBottomOf="@id/dividerShopName"
                 app:layout_constraintEnd_toStartOf="@id/viewBillDate"
-                app:layout_constraintBottom_toTopOf="@+id/viewBill"/>
+                app:layout_constraintBottom_toTopOf="@+id/viewBill"
+                android:contentDescription="viewDate"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewBillDate"
@@ -139,7 +150,8 @@
                 app:layout_constraintStart_toEndOf="@+id/viewDate"
                 app:layout_constraintTop_toTopOf="@id/viewDate"
                 app:layout_constraintBottom_toBottomOf="@+id/viewDate"
-                tools:text="11 June 1993"/>
+                tools:text="11 June 1993"
+                android:contentDescription="viewBillDate"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewBill"
@@ -148,7 +160,8 @@
                 android:text="@string/bill_no_header"
                 android:layout_marginStart="6dp"
                 app:layout_constraintStart_toStartOf="@id/dividerCustomerInfoVertical"
-                app:layout_constraintTop_toBottomOf="@id/viewDate" />
+                app:layout_constraintTop_toBottomOf="@id/viewDate"
+                android:contentDescription="viewBill"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewBillNumber"
@@ -159,16 +172,18 @@
                 app:layout_constraintStart_toEndOf="@+id/viewBill"
                 app:layout_constraintTop_toTopOf="@id/viewBill"
                 app:layout_constraintBottom_toBottomOf="@id/viewBill"
-                tools:text="0987654321"/>
+                tools:text="0987654321"
+                android:contentDescription="viewBillNumber"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/dividerCustomerInfo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_marginTop="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewCustomerAddress"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="dividerCustomerInfo"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerBill"
@@ -178,7 +193,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerCustomerInfo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/viewCumulativeAmount" />
+                app:layout_constraintBottom_toTopOf="@id/viewCumulativeAmount"
+                android:contentDescription="recyclerBill"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewINR"
@@ -192,7 +208,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/viewCumulativeAmount"
                 app:layout_constraintEnd_toStartOf="@id/viewCumulativeAmount"
-                app:layout_constraintBottom_toBottomOf="@id/viewCumulativeAmount"/>
+                app:layout_constraintBottom_toBottomOf="@id/viewCumulativeAmount"
+                android:contentDescription="viewINR"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewCumulativeAmount"
@@ -205,7 +222,8 @@
                 android:layout_marginBottom="12dp"
                 app:layout_constraintStart_toEndOf="@id/viewINR"
                 app:layout_constraintTop_toBottomOf="@id/recyclerBill"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="viewCumulativeAmount"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
