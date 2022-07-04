@@ -30,5 +30,7 @@ public class MillAVUtils {
     public static final String CUSTOMER_ADDRESS = "customer_address";
 
     public static final int A4_WIDTH = 595;
-    public static final int A4_HEIGHT = 841;
+    public static final int A4_HEIGHT = 842;
+    public static final int POSTSCRIPT_POINTS = 72;
+    public static final float POSTSCRIPT_THRESHOLD = 0.75f;
 }

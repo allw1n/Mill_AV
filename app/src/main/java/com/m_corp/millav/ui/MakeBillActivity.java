@@ -12,7 +12,6 @@ import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,9 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -121,56 +120,38 @@ public class MakeBillActivity extends AppCompatActivity {
 
         PdfDocument pdfDocument = new PdfDocument();
 
-
         try {
-            List<View> viewList = new ArrayList<>();
-            ConstraintLayout constraintLayout = findViewById(R.id.pdfLayout);
-            int childCount = constraintLayout.getChildCount();
-            Log.d("childCount", String.valueOf(childCount));
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int dpi = metrics.densityDpi;
+            Log.d("DPI", String.valueOf(dpi));
 
-            for (int i = 0; i < childCount; i++) {
-                viewList.add(i, constraintLayout.getChildAt(i));
-            }
+            View content = findViewById(R.id.pdfLayout);
+
+            float pageWidthInPixel = content.getWidth();
+            Log.d("pageWidthInPixel", String.valueOf(pageWidthInPixel));
+            float pageHeightInPixel = content.getHeight();
+            Log.d("pageHeightInPixel", String.valueOf(pageHeightInPixel));
+
+            content.measure(
+                    View.MeasureSpec.makeMeasureSpec(
+                            (int) pageWidthInPixel, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(
+                            (int) pageHeightInPixel, View.MeasureSpec.UNSPECIFIED));
+
+            float ratio = pageWidthInPixel / A4_WIDTH;
+            pageHeightInPixel = A4_HEIGHT * ratio;
 
             PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(
-                    A4_WIDTH, A4_HEIGHT, 1).create();
+                    (int) pageWidthInPixel, (int) pageHeightInPixel, 1).create();
 
             PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
-            for (int i = 0; i < viewList.size(); i++) {
+            content.layout(0, 0, (int) pageWidthInPixel, (int) pageHeightInPixel);
+            content.draw(page.getCanvas());
 
-                View content = viewList.get(i);
-                Log.d("content", String.valueOf(content.getContentDescription()));
+            content.invalidate();
+            content.requestLayout();
 
-                int pageWidthInPixel = content.getWidth();
-                Log.d("pageWidthInPixel", String.valueOf(pageWidthInPixel));
-                int pageHeightInPixel = content.getHeight();
-                Log.d("pageHeightInPixel", String.valueOf(pageHeightInPixel));
-
-                content.measure(
-                        View.MeasureSpec.makeMeasureSpec(
-                                pageWidthInPixel, View.MeasureSpec.UNSPECIFIED),
-                        View.MeasureSpec.makeMeasureSpec(
-                                pageHeightInPixel, View.MeasureSpec.UNSPECIFIED));
-
-                int measuredWidth = content.getMeasuredWidth();
-                if (measuredWidth != 0)
-                    pageWidthInPixel = measuredWidth;
-                Log.d("measuredPageWidth", String.valueOf(pageWidthInPixel));
-
-                int measuredHeight = content.getMeasuredHeight();
-                if (measuredHeight != 0)
-                    pageHeightInPixel = measuredHeight;
-                Log.d("measuredPageHeight", String.valueOf(pageHeightInPixel));
-
-                content.layout(0, 0, pageWidthInPixel, pageHeightInPixel);
-                content.draw(page.getCanvas());
-
-                page.getCanvas().restore();
-
-                content.invalidate();
-                content.requestLayout();
-            }
             pdfDocument.finishPage(page);
 
             FileOutputStream fOS = new FileOutputStream(pdfFile);
