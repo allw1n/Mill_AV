@@ -34,6 +34,8 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
     private int totalBags = 0;
     private int laborCostPerBag;
 
+    private final DecimalFormat dF = new DecimalFormat("#.##");
+
     public MakeBillAdapter(AppCompatActivity activity, int billNumber) {
         this.activity = activity;
         setBillDetails(billNumber);
@@ -67,12 +69,14 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
 
         laborCostPerBag = 3;
 
-        DecimalFormat dF = new DecimalFormat("#.##");
-
         for (int i = 0; i < cropNames.size(); i++) {
             float unformattedAmount =
                     Float.parseFloat(cropWeights.get(i)) * Float.parseFloat(cropPrices.get(i));
+            Log.d("unformattedAmount", String.valueOf(unformattedAmount));
+
             float amount = Float.parseFloat(dF.format(unformattedAmount));
+            Log.d("formattedAmount", String.valueOf(amount));
+
             cumulativeAmount += amount;
             cropTotalAmounts.add(i, String.valueOf(amount));
 
@@ -141,7 +145,7 @@ public class MakeBillAdapter extends RecyclerView.Adapter<MakeBillAdapter.MakeBi
                     float newTotalAmount =
                             Float.parseFloat(cropWeights.get(adapterPosition)) *
                                     Float.parseFloat(cropPrices.get(adapterPosition));
-                    cropTotalAmounts.add(adapterPosition, String.valueOf(newTotalAmount));
+                    cropTotalAmounts.add(adapterPosition, dF.format(newTotalAmount));
 
                     notifyItemChanged(adapterPosition);
 

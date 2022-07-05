@@ -3,6 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.m_corp.millav">
 
+    <!-- Without this folders will be inaccessible in Android-11 and above devices -->
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <!-- Without this entry storage-permission entry will not be visible
+         under app-info permissions list Android-10 and below -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <!-- Without "requestLegacyExternalStorage" the folders will remain in-accessible in Android-10,
+         even if WRITE_EXTERNAL_STORAGE as above is present. -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,7 +27,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MillAV"
-        tools:targetApi="32">
+        tools:targetApi="32"
+        android:requestLegacyExternalStorage="true">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.m_corp.millav.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

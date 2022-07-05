@@ -1,5 +1,8 @@
 package com.m_corp.millav.utils;
 
+import android.Manifest;
+import android.os.Build;
+
 public class MillAVUtils {
 
     public static final String LOG_IN_TYPE = "log_in_type";
@@ -17,6 +20,7 @@ public class MillAVUtils {
     public static final String NONE = "none";
     public static final String REQUIRED = "Required";
     public static final String SHARED_PREFS = "shared_prefs";
+
     public static final String FORGOT_PASSWORD_TAG = "ForgotPasswordFragment";
     public static final String ADD_NEW_CROP_TAG = "AddNewCropFragment";
     public static final String CUSTOMER_INFO_TAG = "CustomerInfoFragment";
@@ -31,6 +35,9 @@ public class MillAVUtils {
 
     public static final int A4_WIDTH = 595;
     public static final int A4_HEIGHT = 842;
-    public static final int POSTSCRIPT_POINTS = 72;
-    public static final float POSTSCRIPT_THRESHOLD = 0.75f;
+
+    public static final String WRITE_PERMISSION = "Manifest.permission.WRITE_EXTERNAL_STORAGE";
+    public static final String MANAGE_PERMISSION = "Manifest.permission.MANAGE_EXTERNAL_STORAGE";
+    public static final int SDK_VERSION = Build.VERSION.SDK_INT;
+    public static final String DENIED = "denied";
 }

@@ -7,38 +7,46 @@ import static com.m_corp.millav.utils.MillAVUtils.CUSTOMER_ADDRESS;
 import static com.m_corp.millav.utils.MillAVUtils.CUSTOMER_MOBILE;
 import static com.m_corp.millav.utils.MillAVUtils.CUSTOMER_NAME;
 import static com.m_corp.millav.utils.MillAVUtils.EMPLOYER_MOBILE;
+import static com.m_corp.millav.utils.MillAVUtils.MANAGE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.NONE;
+import static com.m_corp.millav.utils.MillAVUtils.SDK_VERSION;
 import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.m_corp.millav.R;
 import com.m_corp.millav.databinding.ActivityMakeBillBinding;
 import com.m_corp.millav.room.Employer;
+import com.m_corp.millav.utils.RequestPermissions;
 import com.m_corp.millav.viewmodel.EmployerViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MakeBillActivity extends AppCompatActivity {
@@ -47,12 +55,16 @@ public class MakeBillActivity extends AppCompatActivity {
 
     private int billNumber;
 
+    private RequestPermissions requestPermissions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ActivityMakeBillBinding binding = ActivityMakeBillBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        requestPermissions = new RequestPermissions(this);
 
         MaterialTextView viewShopName, viewCustomerName, viewCustomerMobile, viewCustomerAddress,
                 viewBillDate, viewBillNumber, viewCumulativeAmount;
@@ -111,12 +123,27 @@ public class MakeBillActivity extends AppCompatActivity {
     }
 
     private void generatePDF() {
-        fabPrint.setVisibility(View.GONE);
+
+        if (!requestPermissions.permissionsGranted()) {
+            return;
+        }
+
+        File documentsDir = Environment.
+                getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File appDir = new File(documentsDir, getString(R.string.app_name));
+        Log.d("externalDir", appDir.getAbsolutePath());
+
+        boolean dirExists = appDir.exists();
+        Log.d("dirExists", String.valueOf(dirExists));
+        boolean dirCreated = false;
+        if (!dirExists)
+            dirCreated = appDir.mkdir();
+        Log.d("dirCreated", String.valueOf(dirCreated));
 
         String pdfName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.UK).format(new Date());
         String pdfFileName = pdfName + "_" + billNumber + ".pdf";
 
-        File pdfFile = new File(getExternalFilesDir(null), pdfFileName);
+        File pdfFile = new File(appDir + "/" + pdfFileName);
 
         PdfDocument pdfDocument = new PdfDocument();
 
@@ -134,9 +161,14 @@ public class MakeBillActivity extends AppCompatActivity {
 
             content.measure(
                     View.MeasureSpec.makeMeasureSpec(
-                            (int) pageWidthInPixel, View.MeasureSpec.UNSPECIFIED),
+                            (int) pageWidthInPixel, View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(
-                            (int) pageHeightInPixel, View.MeasureSpec.UNSPECIFIED));
+                            (int) pageHeightInPixel, View.MeasureSpec.EXACTLY));
+
+            pageWidthInPixel = content.getMeasuredWidth();
+            Log.d("measuredPageWidth", String.valueOf(pageWidthInPixel));
+            pageHeightInPixel = content.getMeasuredHeight();
+            Log.d("measuredPageHeight", String.valueOf(pageHeightInPixel));
 
             float ratio = pageWidthInPixel / A4_WIDTH;
             pageHeightInPixel = A4_HEIGHT * ratio;
@@ -162,7 +194,6 @@ public class MakeBillActivity extends AppCompatActivity {
         } finally {
             pdfDocument.close();
         }
-
-        fabPrint.setVisibility(View.VISIBLE);
     }
 }
+
