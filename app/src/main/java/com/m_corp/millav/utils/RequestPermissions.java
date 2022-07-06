@@ -23,6 +23,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class RequestPermissions {
@@ -34,13 +35,9 @@ public class RequestPermissions {
     private final SharedPreferences sharedPrefs;
     private final SharedPreferences.Editor editor;
 
-    public RequestPermissions(AppCompatActivity activity) {
+    public RequestPermissions(AppCompatActivity activity, String permission) {
         this.activity = activity;
-
-        if (SDK_VERSION >= Build.VERSION_CODES.R)
-            this.permission = MANAGE_PERMISSION;
-        else
-            this.permission = WRITE_PERMISSION;
+        this.permission = permission;
 
         requestPermission = activity.registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
@@ -51,16 +48,23 @@ public class RequestPermissions {
                             editor.putInt(DENIED, 0);
                         }
                         else {
-                            editor.putInt(DENIED, sharedPrefs.getInt(DENIED, ZERO) + 1);
+                            if (sharedPrefs.getInt(DENIED, ZERO) < 2)
+                                editor.putInt(DENIED, sharedPrefs.getInt(DENIED, ZERO) + 1);
                         }
                         editor.apply();
-
+                        Log.d("Permission result", String.valueOf(result));
                     }
                 }
         );
 
         sharedPrefs = activity.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPrefs.edit();
+
+        if (!sharedPrefs.contains(DENIED)) {
+            Log.d("DENIED", "initialized");
+            editor.putInt(DENIED, ZERO);
+            editor.apply();
+        }
     }
 
     public boolean permissionsGranted() {
@@ -71,51 +75,36 @@ public class RequestPermissions {
         builder.setCancelable(false);
 
         if (SDK_VERSION >= Build.VERSION_CODES.R) {
+            Log.d("R-version check", String.valueOf(SDK_VERSION));
 
             if (Environment.isExternalStorageManager()) {
                 permissionGranted = true;
                 Log.d("R-selfCheck granted", String.valueOf(true));
-
-            } else if (activity.shouldShowRequestPermissionRationale(permission)) {
-
-                if (sharedPrefs.getInt(DENIED, ZERO) < 2) {
-                    Log.d(DENIED,"value less than 2");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.d("Permission","requested in rationale");
-                            requestPermission.launch(permission);
-                        }
-                    });
-
-                } else {
-                    Log.d(DENIED,"value more than 2");
-                    builder.setPositiveButton(
-                            "Settings", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Log.d("Permission","requested from settings");
-                                    Intent settingsIntent = new Intent(
-                                            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                                    settingsIntent.setData(
-                                            Uri.parse("package:" + activity.getPackageName()));
-                                    activity.startActivity(settingsIntent);
-                                }
-                            });
-                }
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            } else {
+                Log.d("R-selfCheck granted", String.valueOf(false));
+                builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("R-rationale cancelled", String.valueOf(permissionGranted));
-                        dialogInterface.cancel();
+                        Intent settingsIntent = new Intent(
+                                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                        settingsIntent.setData(
+                                Uri.parse("package:" + activity.getPackageName()));
+                        activity.startActivity(settingsIntent);
                     }
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }
+
+        } else if (SDK_VERSION == Build.VERSION_CODES.Q) {
+            Log.d("Q-version check", String.valueOf(SDK_VERSION));
+
+            if (Environment.isExternalStorageLegacy()) {
+                permissionGranted = true;
+                Log.d("Q-selfCheck granted", String.valueOf(true));
 
             } else {
-                Log.d("Permission","requested after rationale check");
+                Log.d("Q-selfCheck granted", String.valueOf(false));
                 builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -129,7 +118,73 @@ public class RequestPermissions {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
+
+        } else if (SDK_VERSION >= Build.VERSION_CODES.M) {
+            Log.d("Others-version check", String.valueOf(SDK_VERSION));
+
+            if (sharedPrefs.getInt(DENIED, ZERO) < 2) {
+                Log.d("Others-DENIED check", String.valueOf(sharedPrefs.getInt(DENIED, ZERO)));
+
+                if (activity.shouldShowRequestPermissionRationale(permission)) {
+                    Log.d("Others-rationale check",
+                            String.valueOf(
+                                    activity.shouldShowRequestPermissionRationale(permission)));
+
+                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.d("Others-Permission","requested in rationale");
+                            requestPermission.launch(permission);
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.d("Others-rationale Cancel", String.valueOf(permissionGranted));
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                } else {
+                    Log.d("Q-M-rationale check",
+                            String.valueOf(
+                                    activity.shouldShowRequestPermissionRationale(permission)));
+                    requestPermission.launch(permission);
+                }
+
+            } else {
+                Log.d(DENIED,"value equal or more than 2");
+                builder.setPositiveButton(
+                        "Settings", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.d("Others-Permission","requested from settings");
+                                Intent settingsIntent = new Intent(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                settingsIntent.setData(
+                                        Uri.parse("package:" + activity.getPackageName()));
+                                activity.startActivity(settingsIntent);
+                            }
+                        });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("Others-rationale Cancel", String.valueOf(permissionGranted));
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        } else {
+                Log.d("Others-version Check", String.valueOf(SDK_VERSION));
         }
+
+        Log.d("Permission Check", "exit");
         return permissionGranted;
     }
 }

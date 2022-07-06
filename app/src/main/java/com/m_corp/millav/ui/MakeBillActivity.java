@@ -11,6 +11,7 @@ import static com.m_corp.millav.utils.MillAVUtils.MANAGE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.NONE;
 import static com.m_corp.millav.utils.MillAVUtils.SDK_VERSION;
 import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
+import static com.m_corp.millav.utils.MillAVUtils.WRITE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +65,10 @@ public class MakeBillActivity extends AppCompatActivity {
         ActivityMakeBillBinding binding = ActivityMakeBillBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        requestPermissions = new RequestPermissions(this);
+        if (SDK_VERSION >= Build.VERSION_CODES.R)
+            requestPermissions = new RequestPermissions(this, MANAGE_PERMISSION);
+        else
+            requestPermissions = new RequestPermissions(this, WRITE_PERMISSION);
 
         MaterialTextView viewShopName, viewCustomerName, viewCustomerMobile, viewCustomerAddress,
                 viewBillDate, viewBillNumber, viewCumulativeAmount;
@@ -128,8 +132,18 @@ public class MakeBillActivity extends AppCompatActivity {
             return;
         }
 
-        File documentsDir = Environment.
-                getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File documentsDir = null;
+
+        /*if (SDK_VERSION >= Build.VERSION_CODES.R) {
+
+
+        } else {
+            documentsDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        }*/
+
+        documentsDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS);
+
         File appDir = new File(documentsDir, getString(R.string.app_name));
         Log.d("externalDir", appDir.getAbsolutePath());
 

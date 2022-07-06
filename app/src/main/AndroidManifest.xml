@@ -11,10 +11,10 @@
     <!-- Without this entry storage-permission entry will not be visible
          under app-info permissions list Android-10 and below -->
     <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <!-- Without "requestLegacyExternalStorage" the folders will remain in-accessible in Android-10,
          even if WRITE_EXTERNAL_STORAGE as above is present. -->
