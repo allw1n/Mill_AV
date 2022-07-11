@@ -91,9 +91,9 @@ public class MakeBillActivity extends AppCompatActivity {
                 sharedPrefs.getString(EMPLOYER_MOBILE, NONE));
 
         viewShopName.setText(employer[0].getName());
-        viewCustomerName.setText(getIntent().getStringExtra(CUSTOMER_NAME));
+        /*viewCustomerName.setText(getIntent().getStringExtra(CUSTOMER_NAME));
         viewCustomerMobile.setText(getIntent().getStringExtra(CUSTOMER_MOBILE));
-        viewCustomerAddress.setText(getIntent().getStringExtra(CUSTOMER_ADDRESS));
+        viewCustomerAddress.setText(getIntent().getStringExtra(CUSTOMER_ADDRESS));*/
         viewBillDate.setText(getDate());
         billNumber = sharedPrefs.getInt(BILL_NUMBER, ZERO);
         viewBillNumber.setText(String.valueOf(billNumber));
@@ -132,26 +132,19 @@ public class MakeBillActivity extends AppCompatActivity {
             return;
         }
 
-        File documentsDir = null;
-
-        /*if (SDK_VERSION >= Build.VERSION_CODES.R) {
-
-
-        } else {
-            documentsDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-        }*/
+        File documentsDir;
 
         documentsDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOCUMENTS);
 
         File appDir = new File(documentsDir, getString(R.string.app_name));
-        Log.d("externalDir", appDir.getAbsolutePath());
+        Log.d("appDir", appDir.getAbsolutePath());
 
         boolean dirExists = appDir.exists();
         Log.d("dirExists", String.valueOf(dirExists));
         boolean dirCreated = false;
         if (!dirExists)
-            dirCreated = appDir.mkdir();
+            dirCreated = appDir.mkdirs();
         Log.d("dirCreated", String.valueOf(dirCreated));
 
         String pdfName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.UK).format(new Date());
