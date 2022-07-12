@@ -36,8 +36,8 @@ public class MillAVUtils {
     public static final int A4_WIDTH = 595;
     public static final int A4_HEIGHT = 842;
 
-    public static final String WRITE_PERMISSION = "Manifest.permission.WRITE_EXTERNAL_STORAGE";
-    public static final String MANAGE_PERMISSION = "Manifest.permission.MANAGE_EXTERNAL_STORAGE";
+    public static final String WRITE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
+    public static final String MANAGE_PERMISSION = "android.permission.MANAGE_EXTERNAL_STORAGE";
     public static final int SDK_VERSION = Build.VERSION.SDK_INT;
     public static final String DENIED = "denied";
 }

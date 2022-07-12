@@ -27,8 +27,12 @@
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable-v24/button_enabled_bg.xml" value="0.1575" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable-v24/button_transparent_bg.xml" value="0.1575" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1575" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable-v24/ic_minus_disabled.xml" value="0.1" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable-v24/ic_plus_enabled.xml" value="0.1" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/button_enabled_bg.xml" value="0.148" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/ic_round_add_24.xml" value="0.1575" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/ic_round_edit_24.xml" value="0.1" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/ic_round_receipt_24.xml" value="0.1575" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/ic_round_send_24.xml" value="0.1575" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/drawable/pdf_bg.xml" value="0.16" />
@@ -49,7 +53,7 @@
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/change_price_per_kg.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/crop_item.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/crops_list_item.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/enter_crop_item.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/enter_crop_item.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/fragment_add_new_crop.xml" value="0.25" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/fragment_change_price.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/allwin/AndroidStudioProjects/Mill_AV/app/src/main/res/layout/fragment_customer_info.xml" value="0.22" />
