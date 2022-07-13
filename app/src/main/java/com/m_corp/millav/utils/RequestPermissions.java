@@ -1,15 +1,12 @@
 package com.m_corp.millav.utils;
 
 import static com.m_corp.millav.utils.MillAVUtils.DENIED;
-import static com.m_corp.millav.utils.MillAVUtils.MANAGE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.SDK_VERSION;
 import static com.m_corp.millav.utils.MillAVUtils.SHARED_PREFS;
-import static com.m_corp.millav.utils.MillAVUtils.WRITE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -23,7 +20,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class RequestPermissions {
@@ -84,15 +80,13 @@ public class RequestPermissions {
                 Log.d("R-selfCheck granted", String.valueOf(true));
             } else {
                 Log.d("R-selfCheck granted", String.valueOf(false));
-                builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent settingsIntent = new Intent(
-                                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                        settingsIntent.setData(
-                                Uri.parse("package:" + activity.getPackageName()));
-                        activity.startActivity(settingsIntent);
-                    }
+                builder.setPositiveButton("Settings", (dialogInterface, i) -> {
+
+                    Intent settingsIntent = new Intent(
+                            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                    settingsIntent.setData(
+                            Uri.parse("package:" + activity.getPackageName()));
+                    activity.startActivity(settingsIntent);
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
@@ -107,15 +101,13 @@ public class RequestPermissions {
 
             } else {
                 Log.d("Q-selfCheck granted", String.valueOf(false));
-                builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent settingsIntent = new Intent(
-                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        settingsIntent.setData(
-                                Uri.parse("package:" + activity.getPackageName()));
-                        activity.startActivity(settingsIntent);
-                    }
+                builder.setPositiveButton("Settings", (dialogInterface, i) -> {
+
+                    Intent settingsIntent = new Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    settingsIntent.setData(
+                            Uri.parse("package:" + activity.getPackageName()));
+                    activity.startActivity(settingsIntent);
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
@@ -140,20 +132,16 @@ public class RequestPermissions {
                                 String.valueOf(
                                         activity.shouldShowRequestPermissionRationale(permission)));
 
-                        builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Log.d("PtoM-Permission","requested in rationale");
-                                requestPermission.launch(permission);
-                            }
+                        builder.setPositiveButton("Grant", (dialogInterface, i) -> {
+
+                            Log.d("PtoM-Permission","requested in rationale");
+                            requestPermission.launch(permission);
                         });
 
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Log.d("PtoM-rationale Cancel", String.valueOf(permissionGranted));
-                                dialogInterface.cancel();
-                            }
+                        builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+
+                            Log.d("PtoM-rationale Cancel", String.valueOf(permissionGranted));
+                            dialogInterface.cancel();
                         });
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
@@ -167,25 +155,20 @@ public class RequestPermissions {
 
                 } else {
                     Log.d(DENIED,"value equal or more than 2");
-                    builder.setPositiveButton(
-                            "Settings", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Log.d("PtoM-Permission","requested from settings");
-                                    Intent settingsIntent = new Intent(
-                                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    settingsIntent.setData(
-                                            Uri.parse("package:" + activity.getPackageName()));
-                                    activity.startActivity(settingsIntent);
-                                }
+                    builder.setPositiveButton("Settings", (dialogInterface, i) -> {
+
+                                Log.d("PtoM-Permission","requested from settings");
+                                Intent settingsIntent = new Intent(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                settingsIntent.setData(
+                                        Uri.parse("package:" + activity.getPackageName()));
+                                activity.startActivity(settingsIntent);
                             });
 
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.d("PtoM-rationale Cancel", String.valueOf(permissionGranted));
-                            dialogInterface.cancel();
-                        }
+                    builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+
+                        Log.d("PtoM-rationale Cancel", String.valueOf(permissionGranted));
+                        dialogInterface.cancel();
                     });
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
@@ -198,39 +181,6 @@ public class RequestPermissions {
                     PackageManager.PERMISSION_GRANTED) {
                 Log.d("Others-self check", "granted");
                 permissionGranted = true;
-
-            } else {
-                Log.d("Others-self check", "not granted");
-
-                if (sharedPrefs.getInt(DENIED, ZERO) < 2) {
-                    Log.d("Others-DENIED check", String.valueOf(sharedPrefs.getInt(DENIED, ZERO)));
-                    requestPermission.launch(permission);
-
-                } else {
-                    Log.d(DENIED,"value equal or more than 2");
-                    builder.setPositiveButton(
-                            "Settings", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Log.d("Others-Permission","requested from settings");
-                                    Intent settingsIntent = new Intent(
-                                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    settingsIntent.setData(
-                                            Uri.parse("package:" + activity.getPackageName()));
-                                    activity.startActivity(settingsIntent);
-                                }
-                            });
-
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.d("Others-rationale Cancel", String.valueOf(permissionGranted));
-                            dialogInterface.cancel();
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                }
             }
         }
 

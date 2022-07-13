@@ -15,16 +15,12 @@ import static com.m_corp.millav.utils.MillAVUtils.WRITE_PERMISSION;
 import static com.m_corp.millav.utils.MillAVUtils.ZERO;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +28,6 @@ import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -51,8 +46,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MakeBillActivity extends AppCompatActivity {
-
-    private ExtendedFloatingActionButton fabPrint;
 
     private int billNumber;
 
@@ -82,7 +75,7 @@ public class MakeBillActivity extends AppCompatActivity {
         viewBillNumber = binding.viewBillNumber;
         recyclerBill = binding.recyclerBill;
         viewCumulativeAmount = binding.viewCumulativeAmount;
-        fabPrint = binding.fabPrint;
+        ExtendedFloatingActionButton fabPrint = binding.fabPrint;
 
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         EmployerViewModel employerViewModel = new ViewModelProvider(this)
@@ -91,9 +84,9 @@ public class MakeBillActivity extends AppCompatActivity {
                 sharedPrefs.getString(EMPLOYER_MOBILE, NONE));
 
         viewShopName.setText(employer[0].getName());
-        /*viewCustomerName.setText(getIntent().getStringExtra(CUSTOMER_NAME));
+        viewCustomerName.setText(getIntent().getStringExtra(CUSTOMER_NAME));
         viewCustomerMobile.setText(getIntent().getStringExtra(CUSTOMER_MOBILE));
-        viewCustomerAddress.setText(getIntent().getStringExtra(CUSTOMER_ADDRESS));*/
+        viewCustomerAddress.setText(getIntent().getStringExtra(CUSTOMER_ADDRESS));
         viewBillDate.setText(getDate());
         billNumber = sharedPrefs.getInt(BILL_NUMBER, ZERO);
         viewBillNumber.setText(String.valueOf(billNumber));

@@ -69,11 +69,9 @@ public class PendingBillsActivity extends AppCompatActivity {
                         editor.putInt(BILL_NUMBER, bill.getBillNumber());
                         editor.apply();
 
-                        /*CustomerInfoFragment fragment = CustomerInfoFragment.newInstance();
+                        CustomerInfoFragment fragment = CustomerInfoFragment.newInstance();
                         fragment.application = getApplication();
-                        fragment.show(getSupportFragmentManager(), CUSTOMER_INFO_TAG);*/
-
-                        startActivity(new Intent(PendingBillsActivity.this, MakeBillActivity.class));
+                        fragment.show(getSupportFragmentManager(), CUSTOMER_INFO_TAG);
                     }
                 });
     }
